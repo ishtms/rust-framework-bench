@@ -58,6 +58,7 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 ## Benchmarking tool
 The benchmarks have been performed using [wrk](https://github.com/wg/wrk), locally. 
 
+Check the raw output from wrk [here](https://github.com/Ishtmeet-Singh/rust-framework-benchmarks/tree/master/perf).
 ## Try it yourself
 To run the code please follow the steps - 
 
