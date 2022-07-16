@@ -1,0 +1,48 @@
+[package]
+name = "rust-framework-benchmarks"
+version = "0.1.0"
+edition = "2021"
+authors = ["Ishtmeet Singh"]
+repository = "https://github.com/ishtmeet-singh/rust-framework-benchmarks"
+
+[[bin]]
+name = "actix"
+path = "src/bin/actix.rs"
+
+[[bin]]
+name = "axum"
+path = "src/bin/axum.rs"
+
+[[bin]]
+name = "hyper"
+path = "src/bin/hyper.rs"
+
+[[bin]]
+name = "ntex"
+path = "src/bin/ntex.rs"
+
+[[bin]]
+name = "tide"
+path = "src/bin/tide.rs"
+
+[[bin]]
+name = "warp"
+path = "src/bin/warp.rs"
+
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+warp = "0.3"
+axum = "0.5.13"
+hyper = "0.14.20"
+ntex = { version = "0.5", features = ["tokio"] }
+actix-web = "4"
+tide = "0.16.0"
+async-std = { version = "1.8.0", features = ["attributes"] }
+
+[profile.release]
+opt-level = 3
+debug = false
+lto = true
+debug-assertions = false
+codegen-units = 1
