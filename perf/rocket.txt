@@ -1,0 +1,31 @@
+Duration: 20s, Concurrency: 10, Threads: 1
+Running 20s test @ http://localhost:3006/
+  1 threads and 10 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    55.72us  103.89us  10.06ms   99.58%
+    Req/Sec   156.11k     8.94k  163.46k    91.54%
+  3121697 requests in 20.10s, 735.34MB read
+Requests/sec: 155307.13
+Transfer/sec:     36.58MB
+
+
+Duration: 20s, Concurrency: 100, Threads: 1
+Running 20s test @ http://localhost:3006/
+  1 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   375.07us  193.52us   9.09ms   88.79%
+    Req/Sec   172.03k    16.49k  202.03k    73.63%
+  3439704 requests in 20.10s, 810.25MB read
+Requests/sec: 171122.49
+Transfer/sec:     40.31MB
+
+
+Duration: 30s, Concurrency: 1000, Threads: 1
+Running 30s test @ http://localhost:3006/
+  1 threads and 1000 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     4.14ms    0.90ms  25.90ms   72.99%
+    Req/Sec   124.13k    10.07k  152.84k    69.49%
+  3704682 requests in 30.01s, 0.85GB read
+Requests/sec: 123441.19
+Transfer/sec:     29.08MB

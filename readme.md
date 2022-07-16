@@ -15,6 +15,8 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 **[tide](https://github.com/http-rs/tide)**
 
+**[rocket](https://rocket.rs)**
+
 
 #
 ### Thread: 1 | Concurrency: 10 | Duration: 20 secs
@@ -22,12 +24,13 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 |   Name   |   Req/sec   | Avg Latency | Max Latency |   # Requests  |
 |:--------:|:-----------:|:-----------:|:-----------:|:-------------:|
-|   ntex   |   228,941.  |   0.032 ms  |   2.89 ms   |   4,601,755   |
-|   actix  |   223,726   |   0.033 ms  |   3.77 ms   |   4,496,881   |
-|   hyper  |   205,325   |   0.036 ms  |   3.02 ms   |   4,126,939   |
-|   axum   |   203,453   |   0.037 ms  |   3.66 ms   |   4,089,273   |
-|   warp   |   200,585   |   0.042 ms  |   10.00 ms  |   4,012,148   |
-|   tide   |   127,537   |   0.069 ms  |   2.38 ms   |   2,563,488   |
+| **ntex**  |   228,941.  |   0.032 ms  |   2.89 ms   |   4,601,755   |
+| **actix** |   223,726   |   0.033 ms  |   3.77 ms   |   4,496,881   |
+| **hyper** |   205,325   |   0.036 ms  |   3.02 ms   |   4,126,939   |
+| **axum**  |   203,453   |   0.037 ms  |   3.66 ms   |   4,089,273   |
+| **warp**  |   200,585   |   0.042 ms  |   10.00 ms  |   4,012,148   |
+| **rocket**|   155,307   |   0.055 ms  |   10.06 ms  |   3,121,697   |
+| **tide**  |   127,537   |   0.069 ms  |   2.38 ms   |   2,563,488   |
 
 #
 ### Thread: 1 | Concurrency: 100 | Duration: 20 secs
@@ -40,6 +43,7 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 |   **axum**   |   229,416   |   0.238 ms  |   3.02 ms   |  4,611,457  |
 |   **actix**  |   206,339   |   0.260 ms  |   2.32 ms   |  4,147,603  |
 |   **ntex**   |   201,824   |   0.266 ms  |   2.88 ms   |  4,056,874  |
+|  **rocket**  |   171,122   |   0.375 ms  |   9.09 ms   |  3,439,704  |
 |   **tide**   |    51,483   |   2.100 ms  |   27.15 ms  |  1,034,990  |
 
 #
@@ -53,6 +57,7 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 |   **axum**   |   157,119   |   3.220 ms  |   16.12 ms   |  4,725,407  |
 |   **ntex**   |   132,546   |   3.800 ms  |   12.15 ms   |  3,983,054  |
 |   **actix**  |   130,516   |   3.870 ms  |   12.61 ms   |  3,917,247  |
+|   **rocket**  |   123,441   |   4.140 ms  |   25.90 ms   |  3,704,682  |
 |   **tide**   |    42,289   |   27.17 ms  |   182.9 ms   |  1,269,557  |
 
 ## Benchmarking tool
