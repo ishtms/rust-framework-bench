@@ -30,6 +30,7 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 | **warp**  |   200,585   |   0.042 ms  |   10.00 ms  |   4,012,148   |
 | **rocket**|   155,307   |   0.055 ms  |   10.06 ms  |   3,121,697   |
 | **tide**  |   127,537   |   0.069 ms  |   2.38 ms   |   2,563,488   |
+<div style="height: 30px"></div>
 
 |   Concurrency: 100   |   Duration: 20 secs   |   Threads: 1   |
 |:-------------------:|:---------------------:|:--------------:|
@@ -43,6 +44,7 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 |   **ntex**   |   201,824   |   0.266 ms  |   2.88 ms   |  4,056,874  |
 |  **rocket**  |   171,122   |   0.375 ms  |   9.09 ms   |  3,439,704  |
 |   **tide**   |    51,483   |   2.100 ms  |   27.15 ms  |  1,034,990  |
+<div style="height: 30px"></div>
 
 |   Concurrency: 1000   |   Duration: 20 secs   |   Threads: 1   |
 |:-------------------:|:---------------------:|:--------------:|
