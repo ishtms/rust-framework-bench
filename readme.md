@@ -18,9 +18,8 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 **[rocket](https://rocket.rs)**
 
 
-#
-### Thread: 1 | Concurrency: 10 | Duration: 20 secs
-#
+|   Concurrency: 10   |   Duration: 20 secs   |   Threads: 1   |
+|:-------------------:|:---------------------:|:--------------:|
 
 |   Name   |   Req/sec   | Avg Latency | Max Latency |   # Requests  |
 |:--------:|:-----------:|:-----------:|:-----------:|:-------------:|
@@ -32,9 +31,8 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 | **rocket**|   155,307   |   0.055 ms  |   10.06 ms  |   3,121,697   |
 | **tide**  |   127,537   |   0.069 ms  |   2.38 ms   |   2,563,488   |
 
-#
-### Thread: 1 | Concurrency: 100 | Duration: 20 secs
-#
+|   Concurrency: 100   |   Duration: 20 secs   |   Threads: 1   |
+|:-------------------:|:---------------------:|:--------------:|
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
@@ -46,9 +44,8 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 |  **rocket**  |   171,122   |   0.375 ms  |   9.09 ms   |  3,439,704  |
 |   **tide**   |    51,483   |   2.100 ms  |   27.15 ms  |  1,034,990  |
 
-#
-### Thread: 1 | Concurrency: 1000 | Duration: 30 secs
-#
+|   Concurrency: 1000   |   Duration: 20 secs   |   Threads: 1   |
+|:-------------------:|:---------------------:|:--------------:|
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
