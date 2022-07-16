@@ -1,6 +1,6 @@
 # Rust framework benchmarks
 
-Benchmarks of the most used [rust](https://rust-lang.org) web frameworks.
+Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 ## Frameworks included
 **[hyper](https://hyper.rs)**
