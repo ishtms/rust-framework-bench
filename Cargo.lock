@@ -1077,6 +1077,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "212d0f5754cb6769937f4501cc0e67f4f4483c8d2c3e1e922ee9edbe4ab4c7c0"
 
 [[package]]
+name = "dyn-clone"
+version = "1.0.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9d07a982d1fb29db01e5a59b1918e03da4df7297eaeee7686ac45542fd4e59c8"
+
+[[package]]
 name = "either"
 version = "1.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1166,6 +1172,23 @@ name = "fnv"
 version = "1.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3f9eec918d3f24069decb9af1554cad7c880e2da24a9afd88aca000531ab82c1"
+
+[[package]]
+name = "form-data"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b5b3d4998567b108a22db7fff9046da7fa8d6890c1d3782a9c2be76441fc187c"
+dependencies = [
+ "bytes",
+ "futures-util",
+ "http",
+ "httparse",
+ "memchr",
+ "mime",
+ "serde",
+ "thiserror",
+ "tracing",
+]
 
 [[package]]
 name = "form_urlencoded"
@@ -2143,6 +2166,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0c520e05135d6e763148b6426a837e239041653ba7becd2e538c076c738025fc"
 
 [[package]]
+name = "path-tree"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b0a8e51ed7b23ee28bcbd40a461be660fc1532151a33bf84b7a2d004b5d4eafc"
+
+[[package]]
 name = "pear"
 version = "0.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2528,6 +2557,7 @@ dependencies = [
  "rocket",
  "tide",
  "tokio",
+ "viz",
  "warp",
 ]
 
@@ -2661,6 +2691,19 @@ dependencies = [
  "itoa",
  "ryu",
  "serde",
+]
+
+[[package]]
+name = "sessions-core"
+version = "0.3.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d09782252b0c4207858e121916d719c775ce0fbee3273a167cf86559d5da11d3"
+dependencies = [
+ "async-trait",
+ "cookie 0.16.0",
+ "serde",
+ "serde_json",
+ "thiserror",
 ]
 
 [[package]]
@@ -3111,7 +3154,19 @@ dependencies = [
  "log",
  "pin-project",
  "tokio",
- "tungstenite",
+ "tungstenite 0.14.0",
+]
+
+[[package]]
+name = "tokio-tungstenite"
+version = "0.17.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f714dd15bead90401d77e04243611caec13726c2408afd5b31901dfcdcb3b181"
+dependencies = [
+ "futures-util",
+ "log",
+ "tokio",
+ "tungstenite 0.17.3",
 ]
 
 [[package]]
@@ -3287,6 +3342,25 @@ dependencies = [
 ]
 
 [[package]]
+name = "tungstenite"
+version = "0.17.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e27992fd6a8c29ee7eef28fc78349aa244134e10ad447ce3b9f0ac0ed0fa4ce0"
+dependencies = [
+ "base64 0.13.0",
+ "byteorder",
+ "bytes",
+ "http",
+ "httparse",
+ "log",
+ "rand 0.8.5",
+ "sha-1 0.10.0",
+ "thiserror",
+ "url",
+ "utf-8",
+]
+
+[[package]]
 name = "twoway"
 version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3412,6 +3486,58 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
 
 [[package]]
+name = "viz"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "20858974c06dceda37d2b2ba899b6d97ed6630a780f7e25a44ad0672f80b3a86"
+dependencies = [
+ "hyper",
+ "tokio",
+ "viz-core",
+ "viz-router",
+]
+
+[[package]]
+name = "viz-core"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a601c53167968dd524afeae9bb8c633ab9163bebb81fed8b557cfccc7cb6acd6"
+dependencies = [
+ "async-trait",
+ "base64 0.13.0",
+ "bytes",
+ "cookie 0.16.0",
+ "dyn-clone",
+ "form-data",
+ "futures-util",
+ "getrandom 0.2.7",
+ "headers",
+ "http",
+ "http-body",
+ "hyper",
+ "mime",
+ "serde",
+ "serde_json",
+ "serde_urlencoded",
+ "sessions-core",
+ "thiserror",
+ "tokio",
+ "tokio-tungstenite 0.17.2",
+]
+
+[[package]]
+name = "viz-router"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "28d1c8a8a30692114712976dea12d48601c826a6c4a5c7db3627c6bac417fb13"
+dependencies = [
+ "path-tree",
+ "serde",
+ "thiserror",
+ "viz-core",
+]
+
+[[package]]
 name = "waker-fn"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3451,7 +3577,7 @@ dependencies = [
  "serde_urlencoded",
  "tokio",
  "tokio-stream",
- "tokio-tungstenite",
+ "tokio-tungstenite 0.15.0",
  "tokio-util 0.6.10",
  "tower-service",
  "tracing",
