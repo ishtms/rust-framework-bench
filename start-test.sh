@@ -19,7 +19,7 @@ echo "TIDE: Concurrency [100]"; echo "\n\nDuration: 20s, Concurrency: 100, Threa
 echo "TIDE: Concurrency [1000]"; echo "\n\nDuration: 30s, Concurrency: 1000, Threads: 1" >> perf/tide.txt ; wrk -d30s -c1000 -t1 "http://localhost:3005/" >> perf/tide.txt;
 echo "ROCKET: Concurrency [10]"; echo "Duration: 20s, Concurrency: 10, Threads: 1" >> perf/rocket.txt ; wrk -d20s -c10 -t1 "http://localhost:3006/" >> perf/rocket.txt ;
 echo "ROCKET: Concurrency [100]"; echo "\n\nDuration: 20s, Concurrency: 100, Threads: 1" >> perf/rocket.txt ; wrk -d20s -c100 -t1 "http://localhost:3006/" >> perf/rocket.txt ;
-echo "ROCKET: Concurrency [1000]"; echo "\n\nDuration: 30s, Concurrency: 1000, Threads: 1" >> perf/rocket.txt ; wrk -d30s -c1000 -t1 "http://localhost:3006/" >> perf/rocket.txt
+echo "ROCKET: Concurrency [1000]"; echo "\n\nDuration: 30s, Concurrency: 1000, Threads: 1" >> perf/rocket.txt ; wrk -d30s -c1000 -t1 "http://localhost:3006/" >> perf/rocket.txt;
 echo "VIZ: Concurrency [10]"; echo "Duration: 20s, Concurrency: 10, Threads: 1" >> perf/viz.txt ; wrk -d20s -c10 -t1 "http://localhost:3007/" >> perf/viz.txt ;
 echo "VIZ: Concurrency [100]"; echo "\n\nDuration: 20s, Concurrency: 100, Threads: 1" >> perf/viz.txt ; wrk -d20s -c100 -t1 "http://localhost:3007/" >> perf/viz.txt ;
 echo "VIZ: Concurrency [1000]"; echo "\n\nDuration: 30s, Concurrency: 1000, Threads: 1" >> perf/viz.txt ; wrk -d30s -c1000 -t1 "http://localhost:3007/" >> perf/viz.txt
