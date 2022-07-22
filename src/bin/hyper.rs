@@ -1,5 +1,3 @@
-#![deny(warnings)]
-
 use std::convert::Infallible;
 
 use hyper::service::{make_service_fn, service_fn};
@@ -17,10 +15,15 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         // returns a Response into a `Service`.
         async { Ok::<_, Infallible>(service_fn(hello)) }
     });
+    let port_number: u16 = str::parse(get_port_number().as_str()).unwrap();
 
-    let addr = ([127, 0, 0, 1], 3001).into();
+    let addr = ([127, 0, 0, 1], port_number).into();
     let server = Server::bind(&addr).serve(make_svc);
     server.await?;
 
     Ok(())
+}
+
+fn get_port_number() -> String {
+    std::env::args().collect::<Vec<String>>()[1].clone()
 }

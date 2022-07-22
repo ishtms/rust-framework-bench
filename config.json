@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Actix Web",
+    "port": 3000,
+    "binary": "actix",
+    "url": "https://actix.rs"
+  },
+  {
+    "name": "Hyper",
+    "port": 3000,
+    "binary": "hyper",
+    "url": "https://hyper.rs"
+  },
+  {
+    "name": "Axum",
+    "port": 3000,
+    "binary": "axum",
+    "url": "https://github.com/tokio-rs/axum"
+  },
+  {
+    "name": "Ntex",
+    "port": 3000,
+    "binary": "ntex",
+    "url": "https://github.com/ntex-rs/ntex"
+  },
+  {
+    "name": "Rocket",
+    "port": 3000,
+    "binary": "rocket",
+    "url": "https://rocket.rs"
+  },
+  {
+    "name": "Tide",
+    "port": 3000,
+    "binary": "tide",
+    "url": "https://github.com/http-rs/tide"
+  },
+  {
+    "name": "Viz",
+    "port": 3000,
+    "binary": "viz",
+    "url": "https://github.com/viz-rs/viz"
+  },
+  {
+    "name": "Warp",
+    "port": 3000,
+    "binary": "warp",
+    "url": "https://github.com/seanmonstar/warp"
+  }
+]

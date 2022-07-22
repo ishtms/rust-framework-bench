@@ -13,3 +13,7 @@ fn say_hello() -> &'static str {
 fn rocket() -> _ {
     rocket::build().mount("/", routes![say_hello])
 }
+
+fn get_port_number() -> String {
+    std::env::args().collect::<Vec<String>>()[1].clone()
+}
