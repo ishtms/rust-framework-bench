@@ -89,7 +89,7 @@ To run the tests locally, please follow the steps -
 4. Run the main script and you're good to go..
 `./target/release/main` or `cargo run --release --bin main` 
 
-All the output will be stored in `perf/*`
+All the output will be stored in `perf/{name}/{concurrency}.txt*`
 
 ## Machine used
 M1 Max MacBook Pro 2021 - 64GB ram, 10 CPU cores and 32 GPU cores
