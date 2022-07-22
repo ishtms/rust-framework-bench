@@ -1,3 +1,4 @@
+
 # Rust framework benchmarks
 
 Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
@@ -18,14 +19,14 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Ntex**|225,508|31.99us|0.91ms|6,787,926|
-|**Actix Web**|218,494|34.21us|2.39ms|6,576,869|
-|**Hyper**|201,448|36.71us|557.00us|6,063,527|
-|**Axum**|199,114|37.57us|664.00us|5,993,306|
-|**Warp**|198,503|37.23us|662.00us|5,974,891|
-|**Viz**|197,735|40.33us|10.07ms|5,951,843|
-|**Rocket**|155,413|52.70us|5.72ms|4,677,874|
-|**Tide**|131,920|67.79us|8.21ms|3,970,779|
+|**Ntex**|226,774|31.89us|0.96ms|6,825,962|
+|**Actix Web**|221,388|33.22us|463.00us|6,663,856|
+|**Hyper**|201,572|36.93us|3.68ms|6,067,266|
+|**Viz**|199,677|37.41us|573.00us|6,010,350|
+|**Axum**|199,348|37.55us|832.00us|6,000,416|
+|**Warp**|197,756|37.64us|2.21ms|5,952,524|
+|**Rocket**|154,473|53.13us|6.67ms|4,649,621|
+|**Tide**|131,539|66.81us|0.89ms|3,959,336|
 
 
 |   Concurrency: 50   |   Duration: 30 secs   |   Threads: 1   |
@@ -33,14 +34,14 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Hyper**|235,058|126.23us|3.05ms|7,052,265|
-|**Actix Web**|233,649|119.51us|3.14ms|7,033,305|
-|**Warp**|229,900|127.93us|2.29ms|6,897,531|
-|**Viz**|227,604|129.45us|3.05ms|6,851,296|
-|**Axum**|227,360|129.67us|2.28ms|6,843,962|
-|**Ntex**|224,752|124.93us|3.08ms|6,765,430|
-|**Rocket**|184,113|189.99us|3.25ms|5,542,080|
-|**Tide**|152,357|241.85us|4.34ms|4,586,299|
+|**Hyper**|234,313|126.89us|3.10ms|7,053,296|
+|**Actix Web**|232,603|120.14us|3.14ms|7,001,720|
+|**Warp**|230,258|127.37us|2.51ms|6,931,058|
+|**Viz**|227,095|130.22us|2.56ms|6,836,129|
+|**Axum**|226,992|130.44us|3.58ms|6,832,989|
+|**Ntex**|225,334|125.12us|3.29ms|6,782,938|
+|**Rocket**|181,237|194.55us|6.09ms|5,437,529|
+|**Tide**|150,411|246.08us|3.28ms|4,512,587|
 
 
 |   Concurrency: 100   |   Duration: 30 secs   |   Threads: 1   |
@@ -48,14 +49,14 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Hyper**|233,902|234.52us|4.85ms|7,017,991|
-|**Warp**|229,245|237.94us|5.96ms|6,878,445|
-|**Viz**|226,401|242.83us|5.68ms|6,815,711|
-|**Axum**|225,633|243.90us|5.96ms|6,792,699|
-|**Actix Web**|215,028|250.34us|5.84ms|6,451,741|
-|**Ntex**|210,214|256.14us|5.04ms|6,307,336|
-|**Rocket**|175,194|373.20us|5.14ms|5,256,955|
-|**Tide**|95,485|749.41us|11.98ms|2,865,018|
+|**Hyper**|232,896|235.72us|4.66ms|7,011,106|
+|**Warp**|227,894|240.62us|10.21ms|6,860,665|
+|**Viz**|225,483|244.28us|5.99ms|6,787,724|
+|**Axum**|225,307|244.24us|6.06ms|6,760,239|
+|**Actix Web**|214,151|251.67us|6.00ms|6,446,935|
+|**Ntex**|208,249|258.86us|6.00ms|6,248,425|
+|**Rocket**|174,342|379.88us|5.85ms|5,231,231|
+|**Tide**|97,950|729.94us|15.66ms|2,939,283|
 
 
 |   Concurrency: 500   |   Duration: 30 secs   |   Threads: 1   |
@@ -63,20 +64,40 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Hyper**|231,712|548.69us|9.70ms|6,954,850|
-|**Warp**|227,345|558.75us|11.85ms|6,823,672|
-|**Viz**|224,034|568.16us|11.29ms|6,724,576|
-|**Axum**|223,949|568.43us|8.97ms|6,721,430|
-|**Ntex**|198,799|527.55us|11.54ms|5,966,654|
-|**Actix Web**|193,529|546.13us|11.60ms|5,808,814|
-|**Rocket**|161,657|0.87ms|11.43ms|4,857,418|
-|**Tide**|47,185|3.88ms|48.44ms|1,416,607|
+|**Hyper**|228,923|556.28us|10.53ms|6,870,931|
+|**Warp**|226,057|564.08us|11.19ms|6,785,238|
+|**Axum**|223,950|568.36us|11.56ms|6,721,774|
+|**Viz**|223,941|568.09us|9.69ms|6,721,023|
+|**Ntex**|199,810|525.28us|12.03ms|5,997,464|
+|**Actix Web**|192,180|550.78us|12.02ms|5,768,134|
+|**Rocket**|160,587|0.88ms|11.59ms|4,825,822|
+|**Tide**|47,464|3.88ms|46.68ms|1,425,285|
+
+
+|   Concurrency: 750   |   Duration: 30 secs   |   Threads: 1   |
+|:-------------------:|:---------------------:|:--------------:|
+
+|   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
+|:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
+|**Hyper**|229,380|554.43us|9.72ms|6,885,411|
+|**Warp**|226,507|560.42us|8.09ms|6,798,132|
+|**Axum**|223,450|569.99us|10.98ms|6,706,654|
+|**Viz**|223,328|569.85us|11.40ms|6,703,864|
+|**Ntex**|199,046|527.00us|19.66ms|5,974,006|
+|**Actix Web**|196,359|537.74us|10.92ms|5,893,522|
+|**Rocket**|157,657|0.90ms|10.79ms|4,739,131|
+|**Tide**|48,098|3.78ms|42.73ms|1,444,373|
+
+
+
+
 
 
 ## Benchmarking tool
 The benchmarks have been performed using [wrk](https://github.com/wg/wrk), locally. 
 
 Check the raw output from wrk [here](https://github.com/Ishtmeet-Singh/rust-framework-benchmarks/tree/master/perf).
+
 
 ## Try it yourself
 Everything is automated, including adding a framework, generating `md` file output, and running the tests without having to start all the servers at once!
@@ -122,5 +143,4 @@ fn get_port_number() -> String {
 }
  Server::build().bind("hello-world", format!("127.0.0.1:{}", port_number))
 ```
-
 

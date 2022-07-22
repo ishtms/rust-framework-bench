@@ -9,7 +9,7 @@ use std::{
     time::Duration,
 };
 
-static BENCHMARK_SETTINGS: [Settings; 4] = [
+static BENCHMARK_SETTINGS: [Settings; 5] = [
     Settings {
         concurrency: 10,
         threads: 1,
@@ -27,6 +27,11 @@ static BENCHMARK_SETTINGS: [Settings; 4] = [
     },
     Settings {
         concurrency: 500,
+        threads: 1,
+        duration: 30,
+    },
+    Settings {
+        concurrency: 750,
         threads: 1,
         duration: 30,
     },
@@ -292,6 +297,7 @@ The benchmarks have been performed using [wrk](https://github.com/wg/wrk), local
 
 Check the raw output from wrk [here](https://github.com/Ishtmeet-Singh/rust-framework-benchmarks/tree/master/perf).
 
+
 ## Try it yourself
 Everything is automated, including adding a framework, generating `md` file output, and running the tests without having to start all the servers at once!
 
@@ -303,7 +309,7 @@ To run the tests locally, please follow the steps -
 4. Run the main script and you're good to go..
 `./target/release/main` or `cargo run --release --bin main` 
 
-All the output will be stored in `perf/*`
+All the output will be stored in `perf/{name}/{concurrency}.txt*`
 
 ## Machine used
 M1 Max MacBook Pro 2021 - 64GB ram, 10 CPU cores and 32 GPU cores
