@@ -1,13 +1,13 @@
+use lazy_static::lazy_static;
+use num_format::{Locale, ToFormattedString};
+use regex::Regex;
+use serde::{Deserialize, Serialize};
 use std::fmt::Write;
 use std::{
     fs,
     process::{Child, Command},
     time::Duration,
 };
-
-use lazy_static::lazy_static;
-use regex::Regex;
-use serde::{Deserialize, Serialize};
 
 static BENCHMARK_SETTINGS: [Settings; 4] = [
     Settings {
@@ -126,14 +126,13 @@ impl Framework {
 
 #[tokio::main]
 async fn main() {
-    // run tests
     let mut frameworks = parse_frameworks();
-    for current_framework in &frameworks {
+    for (index, current_framework) in frameworks.iter().enumerate() {
+        println!("Progress: {}/{}", index + 1, frameworks.len());
         current_framework.run_benchmark().await;
     }
 
     let sorted_frameworks = sort_framework(&mut frameworks);
-    // Parse the string of data into serde_json::Value.
     write_markdown(&sorted_frameworks);
     write_readme(&frameworks);
 }
@@ -190,10 +189,10 @@ fn write_markdown(sorted_frameworks: &[Vec<Stats>]) {
                 &mut markdown_string,
                 "|**{}**|{}|{}|{}|{}|",
                 framework_stat.name,
-                framework_stat.requests_per_second,
+                (framework_stat.requests_per_second as u64).to_formatted_string(&Locale::en),
                 framework_stat.average_latency,
                 framework_stat.max_latency,
-                framework_stat.total_requests
+                (framework_stat.total_requests as u64).to_formatted_string(&Locale::en)
             )
             .unwrap();
         }

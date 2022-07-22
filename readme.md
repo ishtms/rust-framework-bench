@@ -19,14 +19,14 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Ntex**|225657.11|31.78us|771.00us|6792373|
-|**Actix Web**|220938.71|33.28us|1.07ms|6650347|
-|**Hyper**|201807.6|36.59us|553.00us|6074511|
-|**Viz**|199807|37.34us|656.00us|6014204|
-|**Axum**|199447.63|37.45us|0.89ms|6003370|
-|**Warp**|198571.57|37.22us|608.00us|5977065|
-|**Rocket**|155251.65|52.55us|3.63ms|4673127|
-|**Tide**|131681.42|66.82us|2.74ms|3963568|
+|**Ntex**|225,508|31.99us|0.91ms|6,787,926|
+|**Actix Web**|218,494|34.21us|2.39ms|6,576,869|
+|**Hyper**|201,448|36.71us|557.00us|6,063,527|
+|**Axum**|199,114|37.57us|664.00us|5,993,306|
+|**Warp**|198,503|37.23us|662.00us|5,974,891|
+|**Viz**|197,735|40.33us|10.07ms|5,951,843|
+|**Rocket**|155,413|52.70us|5.72ms|4,677,874|
+|**Tide**|131,920|67.79us|8.21ms|3,970,779|
 
 
 |   Concurrency: 50   |   Duration: 30 secs   |   Threads: 1   |
@@ -34,14 +34,14 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Hyper**|235608.71|125.93us|3.01ms|7068694|
-|**Actix Web**|232514.52|120.22us|3.15ms|6999021|
-|**Warp**|230333.42|127.92us|2.38ms|6933171|
-|**Viz**|227322.12|129.25us|2.11ms|6842680|
-|**Axum**|226940.29|130.78us|3.48ms|6831248|
-|**Ntex**|226678.13|124.26us|3.00ms|6823418|
-|**Rocket**|183414.77|191.78us|3.23ms|5521090|
-|**Tide**|152053.33|244.34us|4.83ms|4561843|
+|**Hyper**|235,058|126.23us|3.05ms|7,052,265|
+|**Actix Web**|233,649|119.51us|3.14ms|7,033,305|
+|**Warp**|229,900|127.93us|2.29ms|6,897,531|
+|**Viz**|227,604|129.45us|3.05ms|6,851,296|
+|**Axum**|227,360|129.67us|2.28ms|6,843,962|
+|**Ntex**|224,752|124.93us|3.08ms|6,765,430|
+|**Rocket**|184,113|189.99us|3.25ms|5,542,080|
+|**Tide**|152,357|241.85us|4.34ms|4,586,299|
 
 
 |   Concurrency: 100   |   Duration: 30 secs   |   Threads: 1   |
@@ -49,14 +49,14 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Hyper**|233593.06|235.30us|7.35ms|7008928|
-|**Warp**|229891.96|237.75us|5.83ms|6897704|
-|**Axum**|227819.78|240.69us|5.78ms|6858138|
-|**Viz**|226391.6|242.52us|5.49ms|6792682|
-|**Actix Web**|216282.91|248.39us|5.69ms|6489443|
-|**Ntex**|211784.22|254.52us|6.26ms|6354415|
-|**Rocket**|175100.24|376.68us|5.45ms|5253953|
-|**Tide**|92705|778.68us|13.54ms|2781548|
+|**Hyper**|233,902|234.52us|4.85ms|7,017,991|
+|**Warp**|229,245|237.94us|5.96ms|6,878,445|
+|**Viz**|226,401|242.83us|5.68ms|6,815,711|
+|**Axum**|225,633|243.90us|5.96ms|6,792,699|
+|**Actix Web**|215,028|250.34us|5.84ms|6,451,741|
+|**Ntex**|210,214|256.14us|5.04ms|6,307,336|
+|**Rocket**|175,194|373.20us|5.14ms|5,256,955|
+|**Tide**|95,485|749.41us|11.98ms|2,865,018|
 
 
 |   Concurrency: 500   |   Duration: 30 secs   |   Threads: 1   |
@@ -64,14 +64,14 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Hyper**|231785.07|548.60us|8.67ms|6957108|
-|**Warp**|227676.95|558.24us|11.41ms|6834319|
-|**Axum**|225683.17|564.77us|12.02ms|6772883|
-|**Viz**|224047.26|568.06us|8.88ms|6724933|
-|**Ntex**|203266.77|515.19us|11.87ms|6100620|
-|**Actix Web**|196609.53|537.13us|9.42ms|5901044|
-|**Rocket**|159613.93|0.89ms|11.46ms|4794937|
-|**Tide**|47075|3.89ms|45.72ms|1412991|
+|**Hyper**|231,712|548.69us|9.70ms|6,954,850|
+|**Warp**|227,345|558.75us|11.85ms|6,823,672|
+|**Viz**|224,034|568.16us|11.29ms|6,724,576|
+|**Axum**|223,949|568.43us|8.97ms|6,721,430|
+|**Ntex**|198,799|527.55us|11.54ms|5,966,654|
+|**Actix Web**|193,529|546.13us|11.60ms|5,808,814|
+|**Rocket**|161,657|0.87ms|11.43ms|4,857,418|
+|**Tide**|47,185|3.88ms|48.44ms|1,416,607|
 
 
 
@@ -82,15 +82,14 @@ The benchmarks have been performed using [wrk](https://github.com/wg/wrk), local
 
 Check the raw output from wrk [here](https://github.com/Ishtmeet-Singh/rust-framework-benchmarks/tree/master/perf).
 ## Try it yourself
-Everything is automated, including adding a framework, generating `md` file output, and running the tests without having to start all the servers at once!
-
-To run the tests locally, please follow the steps - 
+To run the code please follow the steps - 
 
 1. Download the repository as a zip, or clone/fork it.
 2. `cd rust-framework-benchmarks`
-3. `cargo build --release --bins`
-4. Run the main script and you're good to go..
-`./target/release/main` or `cargo run --release --bin main` 
+3. `cargo build --release`
+4. Open multiple terminals and start each server (if you want to run all simultaneously). 
+Eg, `./target/release/actix` on one, `./target/release/hyper` on another and so on.
+5. Run batch tests - `sh ./start-test.sh`
 
 All the output will be stored in `perf/*`
 
@@ -99,31 +98,5 @@ M1 Max MacBook Pro 2021 - 64GB ram, 10 CPU cores and 32 GPU cores
 
 ## Suggestions and changes
 All the suggestions, code changes or additions of another web framework is appreciated. I'd like to keep the code as close as a real world scenario, instead of optimising it to the metal.
-
-To add a new library/framework, please make sure to use the `PORT` provided through the benchmark dynamically. Default is `3000` for all. You can change it in `config.json`.
-
-Also, to add a framework, add an entry inside `config.json` for the benchmarks to detect it.
-
-```json
-[
-  {
-    // Name of your framework. Displayed in the readme and during logs
-    "name": "Axum", 
-    // Default for all the frameworks
-    "port": 3000,
-    // the name of the file that your framework is located
-    "binary": "axum", 
-    // Github or Crates.io or Website
-    "url": "https://github.com/tokio-rs/axum" 
-  }
-]
-```
-
-```rs
-fn get_port_number() -> String {
-    std::env::args().collect::<Vec<String>>()[1].clone()
-}
- Server::build().bind("hello-world", format!("127.0.0.1:{}", port_number))
-```
 
 
