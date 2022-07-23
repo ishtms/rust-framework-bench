@@ -246,8 +246,9 @@ fn commit_and_push() {
         .unwrap();
     let push_output = Command::new("git").arg("push").output().unwrap();
     println!(
-        "{}\n{}\n{}",
+        "{}\n{}\n\n{}\n{}",
         String::from_utf8_lossy(&add_output.stdout),
+        String::from_utf8_lossy(&add_output.stderr),
         String::from_utf8_lossy(&commit_output.stdout),
         String::from_utf8_lossy(&push_output.stdout),
     )
