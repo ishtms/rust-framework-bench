@@ -25,32 +25,32 @@ infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
     Settings {
         concurrency: 10,
         threads: 1,
-        duration: 24,
+        duration: 20,
     },
     Settings {
         concurrency: 50,
         threads: 1,
-        duration: 24,
+        duration: 20,
     },
     Settings {
         concurrency: 100,
         threads: 1,
-        duration: 24,
+        duration: 20,
     },
     Settings {
         concurrency: 250,
         threads: 1,
-        duration: 24,
+        duration: 20,
     },
     Settings {
         concurrency: 500,
         threads: 1,
-        duration: 24,
+        duration: 20,
     },
     Settings {
         concurrency: 700,
         threads: 1,
-        duration: 24,
+        duration: 20,
     },
 ]);
 
