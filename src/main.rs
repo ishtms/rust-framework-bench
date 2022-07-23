@@ -238,13 +238,13 @@ fn write_readme(frameworks: &Vec<Framework>) {
 }
 
 fn commit_and_push() {
-    Command::new("git").arg("add").arg(".").spawn().unwrap();
+    Command::new("git").arg("add").arg(".").output().unwrap();
     Command::new("git")
         .arg("commit")
         .arg("-am 'add new results [MD]'")
-        .spawn()
+        .output()
         .unwrap();
-    Command::new("git").arg("push").spawn().unwrap();
+    Command::new("git").arg("push").output().unwrap();
 }
 
 fn write_markdown(sorted_frameworks: &[Vec<Stats>]) {
