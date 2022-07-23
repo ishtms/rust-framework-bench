@@ -3,6 +3,8 @@
 
 Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
+# Demo
+![Demo](https://s4.gifyu.com/images/outputf55c6e3d5b6a1f8e.gif)
 
 ## Frameworks included
 **[Actix-Web](https://actix.rs)**
@@ -130,10 +132,6 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 |**Actix-Web**|176,114|601.50us|12.30ms|3,524,401|
 |**Rocket**|154,113|0.91ms|18.16ms|3,085,802|
 |**Tide**|40,942|6.00ms|57.84ms|819,558|
-
-
-
-
 
 
 ## Benchmarking tool

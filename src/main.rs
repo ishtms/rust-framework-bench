@@ -35,22 +35,22 @@ infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
     Settings {
         concurrency: 100,
         threads: 1,
-        duration: 20,
+        duration: 25,
     },
     Settings {
         concurrency: 250,
         threads: 1,
-        duration: 20,
+        duration: 35,
     },
     Settings {
         concurrency: 500,
         threads: 1,
-        duration: 20,
+        duration: 45,
     },
     Settings {
         concurrency: 700,
         threads: 1,
-        duration: 20,
+        duration: 60,
     },
 ]);
 
@@ -146,8 +146,8 @@ impl Framework {
             .enumerate()
             .for_each(|(bench_index, setting)| {
                 self.print_log(setting, framework_index, bench_index);
-                // wait 1 sec till the server starts running (some servers take more time to start - for example tide)
-                std::thread::sleep(Duration::from_secs(1));
+                // wait 2 secs till the server starts running (some servers take more time to start - for example tide)
+                std::thread::sleep(Duration::from_secs(2));
 
                 let wrk_handle = Command::new("wrk")
                     .arg(format!("-d{}s", setting.duration))
@@ -167,6 +167,7 @@ impl Framework {
                     std::process::exit(-1);
                 }
                 // wait a bit to free system resources
+                std::thread::sleep(Duration::from_secs(2));
             });
 
         if let Err(err_message) = server_handle.kill() {
@@ -180,6 +181,7 @@ impl Framework {
 async fn main() {
     let mut frameworks = parse_frameworks();
     print_benchmark_message();
+    print_expected_time(frameworks.len());
 
     for (index, current_framework) in frameworks.iter().enumerate() {
         current_framework.run_benchmark(index).await;
@@ -330,6 +332,22 @@ fn sort_framework(frameworks: &mut [Framework]) -> Vec<Vec<Stats>> {
     sorted_frameworks
 }
 
+fn print_expected_time(total_frameworks: usize) {
+    let total_time_per_framework = BENCHMARK_SETTINGS
+        .iter()
+        .fold(0, |accumulated, current| accumulated + current.duration + 4);
+    println!(
+        "\t\t 🚀 Benchmark will take around {} to finish.\n\n",
+        format!(
+            " {} minutes {} seconds ",
+            (total_time_per_framework * total_frameworks as u32 / 60),
+            (total_time_per_framework * total_frameworks as u32 % 60)
+        )
+        .black()
+        .on_white()
+    );
+}
+
 fn print_benchmark_message() {
     print!("{esc}c", esc = 27 as char);
     println!(
@@ -346,6 +364,9 @@ static READ_ME_STRING: &str = r##"
 # Rust framework benchmarks
 
 Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
+
+# Demo
+![Demo](https://s4.gifyu.com/images/outputf55c6e3d5b6a1f8e.gif)
 
 ==SPLIT==
 
