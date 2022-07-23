@@ -1,6 +1,6 @@
 [
   {
-    "name": "Actix Web",
+    "name": "Actix-Web",
     "port": 3000,
     "binary": "actix",
     "url": "https://actix.rs"
@@ -46,5 +46,30 @@
     "port": 3000,
     "binary": "warp",
     "url": "https://github.com/seanmonstar/warp"
+  },
+  {
+    "name": "Thruster",
+    "port": 3000,
+    "binary": "thruster",
+    "url": "https://github.com/thruster-rs/Thruster"
+  },
+
+  {
+    "name": "Salvo",
+    "port": 3000,
+    "binary": "salvo",
+    "url": "https://github.com/salvo-rs/salvo"
+  },
+  {
+    "name": "Poem",
+    "port": 3000,
+    "binary": "warp",
+    "url": "https://github.com/poem-web/poem"
+  },
+  {
+    "name": "Astra",
+    "port": 3000,
+    "binary": "warp",
+    "url": "https://github.com/ibraheemdev/astra"
   }
 ]

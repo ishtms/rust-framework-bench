@@ -1,41 +1,58 @@
+use colored::Colorize;
+use indicatif::{ProgressBar, ProgressStyle};
 use lazy_static::lazy_static;
 use num_format::{Locale, ToFormattedString};
 use regex::Regex;
 use serde::{Deserialize, Serialize};
-use std::fmt::Write;
 use std::{
+    fmt::Write,
     fs,
     process::{Child, Command},
     time::Duration,
 };
 
-static BENCHMARK_SETTINGS: [Settings; 5] = [
+macro_rules! infer_len_slice {
+    (
+        $( #[$attr:meta] )*
+        $v:vis $id:ident $name:ident: [$ty:ty; _] = $value:expr
+    ) => {
+        $( #[$attr] )*
+        $v $id $name: [$ty; $value.len()] = $value;
+    }
+}
+
+infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
     Settings {
         concurrency: 10,
         threads: 1,
-        duration: 30,
+        duration: 24,
     },
     Settings {
         concurrency: 50,
         threads: 1,
-        duration: 30,
+        duration: 24,
     },
     Settings {
         concurrency: 100,
         threads: 1,
-        duration: 30,
+        duration: 24,
+    },
+    Settings {
+        concurrency: 250,
+        threads: 1,
+        duration: 24,
     },
     Settings {
         concurrency: 500,
         threads: 1,
-        duration: 30,
+        duration: 24,
     },
     Settings {
-        concurrency: 750,
+        concurrency: 700,
         threads: 1,
-        duration: 30,
+        duration: 24,
     },
-];
+]);
 
 static FRAMEWORK_SETTINGS: &str = include_str!("../config.json");
 struct Settings {
@@ -63,11 +80,41 @@ struct Framework {
 }
 
 impl Framework {
-    fn print_log(&self, settings: &Settings) {
+    fn print_log(&self, settings: &Settings, framework_index: usize, bench_index: usize) {
+        let goal = settings.duration;
+        let pb = ProgressBar::new(goal.into());
         println!(
-            "\n[{}] - Concurrency ({}) | Threads ({}) | Duration ({})",
-            self.name, settings.concurrency, settings.threads, settings.duration
-        )
+            " {} {} {} {} \n",
+            format!(
+                " ⁅{}/{}⁆ ",
+                framework_index * BENCHMARK_SETTINGS.len() + bench_index + 1,
+                BENCHMARK_SETTINGS.len() * parse_frameworks().len()
+            )
+            .black()
+            .on_bright_cyan(),
+            format!(" RUNNING: {} ", self.name)
+                .bright_white()
+                .on_bright_red(),
+            format!(" CONCURRENCY: {} ", settings.concurrency)
+                .bright_black()
+                .on_white(),
+            format!(" THREADS: {} ", settings.threads)
+                .bright_white()
+                .on_bright_black(),
+        );
+        pb.set_style(
+            ProgressStyle::default_bar()
+                .template("{spinner:.cyan} ❖⎨{bar:40.white}⎬❖ ⏰ [{elapsed_precise}]")
+                .progress_chars(r"▋░"),
+        );
+        let duration = settings.duration;
+
+        std::thread::spawn(move || {
+            for _ in 0..duration {
+                pb.inc((1_u32).into());
+                std::thread::sleep(Duration::from_secs(1));
+            }
+        });
     }
 
     #[must_use = "Require handle to kill it once the benchmark finishes"]
@@ -81,7 +128,7 @@ impl Framework {
         }
     }
 
-    async fn run_benchmark(&self) {
+    async fn run_benchmark(&self, framework_index: usize) {
         // start the framework's server
         let mut server_handle = self.start_server();
 
@@ -94,33 +141,33 @@ impl Framework {
             );
             std::process::exit(-1);
         };
+        BENCHMARK_SETTINGS
+            .iter()
+            .enumerate()
+            .for_each(|(bench_index, setting)| {
+                self.print_log(setting, framework_index, bench_index);
+                // wait 1 sec till the server starts running (some servers take more time to start - for example tide)
+                std::thread::sleep(Duration::from_secs(1));
 
-        BENCHMARK_SETTINGS.iter().for_each(|setting| {
-            self.print_log(setting);
+                let wrk_handle = Command::new("wrk")
+                    .arg(format!("-d{}s", setting.duration))
+                    .arg(format!("-t{}", setting.threads))
+                    .arg(format!("-c{}", setting.concurrency))
+                    .arg(format!("http://localhost:{}", self.port))
+                    .output();
+                let wrk_output = wrk_handle.unwrap();
 
-            // wait 1 sec till the server starts running (some servers take more time to start - for example tide)
-            std::thread::sleep(Duration::from_secs(1));
-
-            let wrk_handle = Command::new("wrk")
-                .arg(format!("-d{}s", setting.duration))
-                .arg(format!("-t{}", setting.threads))
-                .arg(format!("-c{}", setting.concurrency))
-                .arg(format!("http://localhost:{}", self.port))
-                .output();
-            let wrk_output = wrk_handle.unwrap();
-
-            // kill server if there's an error while writing `wrk` output to the file
-            if let Err(err_message) = fs::write(
-                format!("perf/{}/{}.txt", self.binary, setting.concurrency),
-                wrk_output.stdout,
-            ) {
-                server_handle.kill().unwrap();
-                println!("\n[ERROR] Couldn't write to file: {}", err_message);
-                std::process::exit(-1);
-            }
-            // wait a bit to free system resources
-            std::thread::sleep(Duration::from_secs(1));
-        });
+                // kill server if there's an error while writing `wrk` output to the file
+                if let Err(err_message) = fs::write(
+                    format!("perf/{}/{}.txt", self.binary, setting.concurrency),
+                    wrk_output.stdout,
+                ) {
+                    server_handle.kill().unwrap();
+                    println!("\n[ERROR] Couldn't write to file: {}", err_message);
+                    std::process::exit(-1);
+                }
+                // wait a bit to free system resources
+            });
 
         if let Err(err_message) = server_handle.kill() {
             println!("\nFailed to kill {} server.\n{}", self.name, err_message);
@@ -132,9 +179,10 @@ impl Framework {
 #[tokio::main]
 async fn main() {
     let mut frameworks = parse_frameworks();
+    print_benchmark_message();
+
     for (index, current_framework) in frameworks.iter().enumerate() {
-        println!("Progress: {}/{}", index + 1, frameworks.len());
-        current_framework.run_benchmark().await;
+        current_framework.run_benchmark(index).await;
     }
 
     let sorted_frameworks = sort_framework(&mut frameworks);
@@ -158,10 +206,8 @@ fn write_readme(frameworks: &Vec<Framework>) {
     writeln!(&mut markdown_content, "# Results").unwrap();
     BENCHMARK_SETTINGS.iter().for_each(|curr| {
         let current_result =
-            fs::read_to_string(format!("results-{}.md", curr.concurrency)).unwrap();
+            fs::read_to_string(format!("results/concurrency-{}.md", curr.concurrency)).unwrap();
 
-        // |   Concurrency: 10   |   Duration: 20 secs   |   Threads: 1   |
-        // |:-------------------:|:---------------------:|:--------------:|
         writeln!(
             &mut markdown_content,
             "|   Concurrency: {}   |   Duration: {} secs   |   Threads: {}   |",
@@ -201,7 +247,11 @@ fn write_markdown(sorted_frameworks: &[Vec<Stats>]) {
             )
             .unwrap();
         }
-        fs::write(format!("./results-{}.md", concurrency), markdown_string).unwrap();
+        fs::write(
+            format!("results/concurrency-{}.md", concurrency),
+            markdown_string,
+        )
+        .unwrap();
     }
 }
 
@@ -278,7 +328,15 @@ fn sort_framework(frameworks: &mut [Framework]) -> Vec<Vec<Stats>> {
     });
 
     sorted_frameworks
-    // println!("Chunks after {:?}", chunks);
+}
+
+fn print_benchmark_message() {
+    print!("{esc}c", esc = 27 as char);
+    println!(
+        "\n\n\t █▀▀ ▀▀█▀▀ █▀▀█ █▀▀█ ▀▀█▀▀   █▀▀▄ █▀▀ █▀▀▄ █▀▀ █░░█ █▀▄▀█ █▀▀█ █▀▀█ █░█
+\t ▀▀█ ░░█░░ █▄▄█ █▄▄▀ ░░█░░   █▀▀▄ █▀▀ █░░█ █░░ █▀▀█ █░▀░█ █▄▄█ █▄▄▀ █▀▄
+\t ▀▀▀ ░░▀░░ ▀░░▀ ▀░▀▀ ░░▀░░   ▀▀▀░ ▀▀▀ ▀░░▀ ▀▀▀ ▀░░▀ ▀░░░▀ ▀░░▀ ▀░▀▀ ▀░▀\n\n"
+    );
 }
 
 static MARKDOWN_HEADER: &str =
