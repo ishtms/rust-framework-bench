@@ -84,7 +84,7 @@ impl Framework {
         let goal = settings.duration;
         let pb = ProgressBar::new(goal.into());
         println!(
-            " {} {} {} {} \n",
+            " {} {} {} {} {}\n",
             format!(
                 " ⁅{}/{}⁆ ",
                 framework_index * BENCHMARK_SETTINGS.len() + bench_index + 1,
@@ -92,15 +92,18 @@ impl Framework {
             )
             .black()
             .on_bright_cyan(),
-            format!(" RUNNING: {} ", self.name)
+            format!(" 🚀 RUNNING: {} ", self.name)
                 .bright_white()
                 .on_bright_red(),
-            format!(" CONCURRENCY: {} ", settings.concurrency)
-                .bright_black()
-                .on_white(),
-            format!(" THREADS: {} ", settings.threads)
+            format!(" 💪 CONCURRENCY: {} ", settings.concurrency)
+                .black()
+                .on_bright_white(),
+            format!(" 🪡 WRK THREADS: {} ", settings.threads)
                 .bright_white()
                 .on_bright_black(),
+            format!(" ⏰ DURATION: {}s ", settings.duration)
+                .black()
+                .on_bright_yellow(),
         );
         pb.set_style(
             ProgressStyle::default_bar()
@@ -337,7 +340,7 @@ fn print_expected_time(total_frameworks: usize) {
         .iter()
         .fold(0, |accumulated, current| accumulated + current.duration + 4);
     println!(
-        "\t\t 🚀 Benchmark will take around {} to finish.\n\n",
+        "\t\t 💤 Benchmark will take around {} to finish.\n\n",
         format!(
             " {} minutes {} seconds ",
             (total_time_per_framework * total_frameworks as u32 / 60),
