@@ -182,17 +182,20 @@ impl Framework {
 
 #[tokio::main]
 async fn main() {
-    let mut frameworks = parse_frameworks();
-    print_benchmark_message();
-    print_expected_time(frameworks.len());
+    // let mut frameworks = parse_frameworks();
+    // print_benchmark_message();
+    // print_expected_time(frameworks.len());
 
-    for (index, current_framework) in frameworks.iter().enumerate() {
-        current_framework.run_benchmark(index).await;
-    }
+    // for (index, current_framework) in frameworks.iter().enumerate() {
+    //     current_framework.run_benchmark(index).await;
+    // }
 
-    let sorted_frameworks = sort_framework(&mut frameworks);
-    write_markdown(&sorted_frameworks);
-    write_readme(&frameworks);
+    // let sorted_frameworks = sort_framework(&mut frameworks);
+    // write_markdown(&sorted_frameworks);
+    // write_readme(&frameworks);
+
+    // optional - disable it if you've not forked yet
+    commit_and_push();
 }
 
 fn write_readme(frameworks: &Vec<Framework>) {
@@ -232,6 +235,16 @@ fn write_readme(frameworks: &Vec<Framework>) {
         split_string[0], markdown_content, split_string[1]
     );
     fs::write("./readme.md", new_md).unwrap();
+}
+
+fn commit_and_push() {
+    Command::new("git").arg("add").arg(".").spawn().unwrap();
+    Command::new("git")
+        .arg("commit")
+        .arg("-am 'add new results [MD]'")
+        .spawn()
+        .unwrap();
+    Command::new("git").arg("push").spawn().unwrap();
 }
 
 fn write_markdown(sorted_frameworks: &[Vec<Stats>]) {
@@ -275,13 +288,19 @@ fn calculate_results(frameworks: &[Framework]) -> Vec<Stats> {
                 framework.binary, setting.concurrency
             ))
             .unwrap();
+
             lazy_static! {
                 static ref LATENCY_RGX: Regex =
                     Regex::new(r"Latency((\s)*[0-9]*.[0-9]*[a-z]*){3}").unwrap();
                 static ref TOTAL_REQUESTS_RGX: Regex = Regex::new(r"[0-9]+ requests in").unwrap();
                 static ref REQUESTS_PER_SECOND_RGX: Regex =
                     Regex::new(r"Requests/sec: [0-9]*.[0-9]*").unwrap();
+                static ref LATENCY_PERCENTILE_90: Regex =
+                    Regex::new(r"90%\s*[0-9]+.[0-9]*[a-z]").unwrap();
+                static ref LATENCY_PERCENTILE_99: Regex =
+                    Regex::new(r"99%\s*[0-9]+.[0-9]*[a-z]").unwrap();
             }
+
             let latency_string: String = LATENCY_RGX
                 .find_iter(&benchmark_result)
                 .map(|mat| mat.as_str())
