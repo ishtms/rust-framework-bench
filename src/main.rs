@@ -38,7 +38,7 @@ const DEFAULT_DURATION: u32 = 5_u32;
 
 static TABLE_SEPARATOR: &str = "|:-------------------:|:---------------------:|:--------------:|\n";
 
-static READ_ME_STRING: &str = include_str!("./utils/readme_block.txt");
+static READ_ME_STRING: &str = include_str!("./utils/readme_block.md");
 
 infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
     #[cfg(not(debug_assertions))]
