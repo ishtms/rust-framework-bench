@@ -94,21 +94,21 @@ impl Framework {
                 .black()
                 .on_bright_yellow(),
         );
-        // let goal = settings.duration;
-        // let pb = ProgressBar::new(goal.into());
-        // pb.set_style(
-        //     ProgressStyle::default_bar()
-        //         .template("{spinner:.cyan} ❖⎨{bar:40.white}⎬❖ ⏰ [{elapsed_precise}]")
-        //         .progress_chars(r"▋░"),
-        // );
-        // let duration = settings.duration + 1;
+        let goal = settings.duration;
+        let pb = ProgressBar::new(goal.into());
+        pb.set_style(
+            ProgressStyle::default_bar()
+                .template("{spinner:.cyan} ❖⎨{bar:40.white}⎬❖ ⏰ [{elapsed_precise}]")
+                .progress_chars(r"▋░"),
+        );
+        let duration = settings.duration + 1;
 
-        // std::thread::spawn(move || {
-        //     for _ in 0..duration {
-        //         pb.inc((1_u32).into());
-        //         std::thread::sleep(Duration::from_secs(1));
-        //     }
-        // });
+        std::thread::spawn(move || {
+            for _ in 0..duration {
+                pb.inc((1_u32).into());
+                std::thread::sleep(Duration::from_secs(1));
+            }
+        });
     }
 
     #[must_use = "Require handle to kill it once the benchmark finishes"]
