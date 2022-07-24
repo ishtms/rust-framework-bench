@@ -149,7 +149,9 @@ impl Framework {
                     .arg(format!("-h=http://localhost:{}", self.port))
                     .output();
                 let rewrk_output = rewrk_handle.unwrap();
-
+                if !rewrk_output.stderr.is_empty() {
+                    println!("Error: {}", String::from_utf8_lossy(&rewrk_output.stderr));
+                }
                 // kill server if there's an error while writing `rewrk` output to the file
                 if let Err(err_message) = fs::write(
                     format!("perf/{}/{}.txt", self.binary, setting.concurrency),
@@ -160,7 +162,7 @@ impl Framework {
                     std::process::exit(-1);
                 }
                 // wait a bit to free system resources
-                std::thread::sleep(Duration::from_secs(1));
+                std::thread::sleep(Duration::from_secs(2));
             });
 
         if let Err(err_message) = server_handle.kill() {
@@ -176,9 +178,9 @@ async fn main() {
     print_benchmark_message();
     print_expected_time(frameworks.len());
 
-    // for (index, current_framework) in frameworks.iter().enumerate() {
-    //     current_framework.run_benchmark(index).await;
-    // }
+    for (index, current_framework) in frameworks.iter().enumerate() {
+        current_framework.run_benchmark(index).await;
+    }
 
     let sorted_frameworks = sort_framework(&mut frameworks);
     write_markdown(&sorted_frameworks);
@@ -426,6 +428,24 @@ Check the raw output from rewrk [here](https://github.com/Ishtmeet-Singh/rust-fr
 
 ## Try it yourself
 Everything is automated, including adding a framework, generating `md` file output, and running the tests without having to start all the servers at once!
+
+Pleas make sure you do not have capped soft limit or hard limit for file descriptors, this may cause benchmarks with high concurrency (-c) fail with OS error 54,
+to fix that - 
+
+## Linux
+1. Open `/etc/sysctl.conf`
+2. Add `fs.file-max = 65536`
+3. Reboot your pc and verify it after rebooting with `sysctl -p`
+
+## Mac
+1. Check your current limit - `launchctl limit maxfiles`
+2. The first entry is the soft limit, and the second entry is hard limit. In most cases the hard limit is unlimited, it's the soft limit that we need to change
+3. Update the hard limit `sudo launchctl limit maxfiles 65536 200000`
+4. Reboot.
+
+Alternatively, if you wish to change the soft limit to only run the benchmark one time, you can change it for your current terminal session by
+`ulimit -n 65536`.
+This doesn't require boot, and will reset back to the default (usually 2560) after restarting the terminal.
 
 To run the tests locally, please follow the steps - 
 

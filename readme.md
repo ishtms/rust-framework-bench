@@ -104,22 +104,22 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
 |**Tokio-minihttp** |145,197|3.52ms|172.19ms|3,628,729|
+|**Hyper** |141,336|3.62ms|181.99ms|3,532,059|
 |**Roa** |141,307|3.62ms|237.15ms|3,531,638|
+|**Warp** |140,183|3.65ms|211.74ms|3,503,454|
+|**Thruster** |136,930|3.74ms|228.33ms|3,422,343|
 |**Salvo** |134,873|3.79ms|231.39ms|3,370,770|
 |**Viz** |134,603|3.80ms|185.97ms|3,363,983|
+|**Axum** |134,455|3.80ms|187.16ms|3,360,539|
+|**Poem** |132,601|3.86ms|188.77ms|3,314,076|
 |**May-MiniHttp** |130,825|3.91ms|198.80ms|3,269,602|
 |**Gotham** |130,673|3.92ms|190.82ms|3,265,701|
+|**Actix-Web** |129,987|3.94ms|198.19ms|3,248,657|
+|**Ntex** |128,481|3.98ms|203.94ms|3,210,951|
 |**Nickel** |126,263|0.10ms|25.05ms|3,155,495|
+|**Rocket** |121,974|4.19ms|209.44ms|3,048,386|
 |**Astra** |120,083|1.22ms|105.54ms|3,001,032|
-|**Actix-Web** (FAIL)|0|FAIL|FAIL|0|
-|**Hyper** (FAIL)|0|FAIL|FAIL|0|
-|**Axum** (FAIL)|0|FAIL|FAIL|0|
-|**Warp** (FAIL)|0|FAIL|FAIL|0|
-|**Ntex** (FAIL)|0|FAIL|FAIL|0|
-|**Rocket** (FAIL)|0|FAIL|FAIL|0|
-|**Tide** (FAIL)|0|FAIL|FAIL|0|
-|**Thruster** (FAIL)|0|FAIL|FAIL|0|
-|**Poem** (FAIL)|0|FAIL|FAIL|0|
+|**Tide** |91,943|5.57ms|230.79ms|2,297,819|
 
 
 
@@ -134,6 +134,24 @@ Check the raw output from rewrk [here](https://github.com/Ishtmeet-Singh/rust-fr
 
 ## Try it yourself
 Everything is automated, including adding a framework, generating `md` file output, and running the tests without having to start all the servers at once!
+
+Pleas make sure you do not have capped soft limit or hard limit for file descriptors, this may cause benchmarks with high concurrency (-c) fail with OS error 54,
+to fix that - 
+
+## Linux
+1. Open `/etc/sysctl.conf`
+2. Add `fs.file-max = 65536`
+3. Reboot your pc and verify it after rebooting with `sysctl -p`
+
+## Mac
+1. Check your current limit - `launchctl limit maxfiles`
+2. The first entry is the soft limit, and the second entry is hard limit. In most cases the hard limit is unlimited, it's the soft limit that we need to change
+3. Update the hard limit `sudo launchctl limit maxfiles 65536 200000`
+4. Reboot.
+
+Alternatively, if you wish to change the soft limit to only run the benchmark one time, you can change it for your current terminal session by
+`ulimit -n 65536`.
+This doesn't require boot, and will reset back to the default (usually 2560) after restarting the terminal.
 
 To run the tests locally, please follow the steps - 
 
