@@ -408,9 +408,9 @@ fn read_perf_data(binary_name: &str, concurrency: u32) -> String {
     .unwrap_or_else(|_| {
         println!(
             "\
-            Couldn't find the file: perf/{}/{}.txt. {} failed to finish the tests successfully, it will not be printed out in the results.
+            Couldn't find the file: perf/{1}/{}.txt. {1} failed to finish the tests successfully, it will not be printed out in the results.
             ",
-            binary_name, concurrency, binary_name
+            concurrency, binary_name
         );
         "".to_string()
     })
