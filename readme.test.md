@@ -8,16 +8,30 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 
 ## Frameworks included
-**[Hyper](https://hyper.rs)** - Fast and safe HTTP for the Rust language<br>
 **[Astra](https://github.com/ibraheemdev/astra)** - Synchronous HTTP server built on top of hyper<br>
 # Results
-|   Concurrency: 512   |   Duration: 30 secs   |   Threads: 1   |
+|   Concurrency: 8   |   Duration: 8 secs   |   Threads: 2   |
 |:-------------------:|:---------------------:|:--------------:|
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Astra** |207,994|402.21us|17.96ms|6,244,370|
-|**Hyper** |164,587|1.58ms|14.94ms|4,943,030|
+|**Astra** (FAIL)|0|FAIL|FAIL|0|
+
+
+|   Concurrency: 64   |   Duration: 8 secs   |   Threads: 2   |
+|:-------------------:|:---------------------:|:--------------:|
+
+|   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
+|:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
+|**Astra** (FAIL)|0|FAIL|FAIL|0|
+
+
+|   Concurrency: 128   |   Duration: 8 secs   |   Threads: 2   |
+|:-------------------:|:---------------------:|:--------------:|
+
+|   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
+|:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
+|**Astra** (FAIL)|0|FAIL|FAIL|0|
 
 
 
@@ -25,9 +39,9 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 
 ## Benchmarking tool
-The benchmarks have been performed using [wrk](https://github.com/wg/wrk), locally. 
+The benchmarks have been performed using [rewrk](https://github.com/ChillFish8/rewrk), locally. 
 
-Check the raw output from wrk [here](https://github.com/Ishtmeet-Singh/rust-framework-benchmarks/tree/master/perf).
+Check the raw output from rewrk [here](https://github.com/Ishtmeet-Singh/rust-framework-benchmarks/tree/master/perf).
 
 
 ## Try it yourself

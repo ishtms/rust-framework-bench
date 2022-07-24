@@ -22,31 +22,26 @@ macro_rules! infer_len_slice {
 }
 
 infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
-    // Settings {
-    //     concurrency: 8,
-    //     threads: 1,
-    //     duration: 30,
-    // },
-    // Settings {
-    //     concurrency: 64,
-    //     threads: 1,
-    //     duration: 30,
-    // },
-    // Settings {
-    //     concurrency: 128,
-    //     threads: 1,
-    //     duration: 30,
-    // },
-    // Settings {
-    //     concurrency: 256,
-    //     threads: 1,
-    //     duration: 30,
-    // },
     Settings {
-        concurrency: 512,
+        concurrency: 10,
         threads: 1,
-        duration: 30,
+        duration: 20,
     },
+    // Settings {
+    //     concurrency: 50,
+    //     threads: 1,
+    //     duration: 20,
+    // },
+    // Settings {
+    //     concurrency: 250,
+    //     threads: 1,
+    //     duration: 25,
+    // },
+    // Settings {
+    //     concurrency: 700,
+    //     threads: 1,
+    //     duration: 25,
+    // },
 ]);
 
 static FRAMEWORK_SETTINGS: &str = include_str!("../config.json");
@@ -146,15 +141,17 @@ impl Framework {
             .for_each(|(bench_index, setting)| {
                 self.print_log(setting, framework_index, bench_index);
                 // wait 2 secs till the server starts running (some servers take more time to start - for example tide)
-                std::thread::sleep(Duration::from_secs(3));
-
-                let wrk_handle = Command::new("wrk")
-                    .arg(format!("-d{}s", setting.duration))
-                    .arg(format!("-t{}", setting.threads))
-                    .arg(format!("-c{}", setting.concurrency))
-                    .arg(format!("http://localhost:{}", self.port))
-                    .output();
+                // std::thread::sleep(Duration::from_secs(2));
+                println!("Run");
+                let wrk_handle =
+                    Command::new("/Users/ishtmeet/Downloads/rewrk-master/target/debug/rewrk")
+                        .arg(format!("-d{}s", setting.duration))
+                        .arg("-t2")
+                        .arg(format!("-c{}", setting.concurrency))
+                        .arg(format!("-h=http://localhost:{}", self.port))
+                        .output();
                 let wrk_output = wrk_handle.unwrap();
+                println!("error - {}", String::from_utf8_lossy(&wrk_output.stderr));
 
                 // kill server if there's an error while writing `wrk` output to the file
                 if let Err(err_message) = fs::write(
@@ -187,6 +184,7 @@ async fn main() {
     }
 
     let sorted_frameworks = sort_framework(&mut frameworks);
+    println!("Sorted - {:#?}", sorted_frameworks);
     write_markdown(&sorted_frameworks);
     write_readme(&frameworks);
 
@@ -230,7 +228,7 @@ fn write_readme(frameworks: &Vec<Framework>) {
         "{}\n{}\n{}",
         split_string[0], markdown_content, split_string[1]
     );
-    fs::write("./readme.test.md", new_md).unwrap();
+    fs::write("./readme.md", new_md).unwrap();
 }
 
 fn commit_and_push() {

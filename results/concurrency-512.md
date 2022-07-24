@@ -1,4 +1,4 @@
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Astra** |207,994|402.21us|17.96ms|6,244,370|
-|**Hyper** |164,587|1.58ms|14.94ms|4,943,030|
+|**Hyper** (FAIL)|0|FAIL|FAIL|0|
+|**Astra** (FAIL)|0|FAIL|FAIL|0|
