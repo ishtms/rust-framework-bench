@@ -1,3 +1,3 @@
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Astra** (FAIL)|0|FAIL|FAIL|0|
+|**Astra** |184,444|0.05ms|0.49ms|368,297|

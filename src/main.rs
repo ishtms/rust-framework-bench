@@ -23,25 +23,25 @@ macro_rules! infer_len_slice {
 
 infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
     Settings {
-        concurrency: 10,
-        threads: 1,
-        duration: 20,
+        concurrency: 16,
+        threads: 2,
+        duration: 25,
     },
-    // Settings {
-    //     concurrency: 50,
-    //     threads: 1,
-    //     duration: 20,
-    // },
-    // Settings {
-    //     concurrency: 250,
-    //     threads: 1,
-    //     duration: 25,
-    // },
-    // Settings {
-    //     concurrency: 700,
-    //     threads: 1,
-    //     duration: 25,
-    // },
+    Settings {
+        concurrency: 64,
+        threads: 1,
+        duration: 25,
+    },
+    Settings {
+        concurrency: 256,
+        threads: 1,
+        duration: 25,
+    },
+    Settings {
+        concurrency: 512,
+        threads: 1,
+        duration: 25,
+    },
 ]);
 
 static FRAMEWORK_SETTINGS: &str = include_str!("../config.json");
@@ -89,7 +89,7 @@ impl Framework {
             format!(" 💪 CONCURRENCY: {} ", settings.concurrency)
                 .black()
                 .on_bright_white(),
-            format!(" 🪡 WRK THREADS: {} ", settings.threads)
+            format!(" 🪡 REWRK THREADS: {} ", settings.threads)
                 .bright_white()
                 .on_bright_black(),
             format!(" ⏰ DURATION: {}s ", settings.duration)
@@ -141,22 +141,19 @@ impl Framework {
             .for_each(|(bench_index, setting)| {
                 self.print_log(setting, framework_index, bench_index);
                 // wait 2 secs till the server starts running (some servers take more time to start - for example tide)
-                // std::thread::sleep(Duration::from_secs(2));
-                println!("Run");
-                let wrk_handle =
-                    Command::new("/Users/ishtmeet/Downloads/rewrk-master/target/debug/rewrk")
-                        .arg(format!("-d{}s", setting.duration))
-                        .arg("-t2")
-                        .arg(format!("-c{}", setting.concurrency))
-                        .arg(format!("-h=http://localhost:{}", self.port))
-                        .output();
-                let wrk_output = wrk_handle.unwrap();
-                println!("error - {}", String::from_utf8_lossy(&wrk_output.stderr));
+                std::thread::sleep(Duration::from_secs(2));
+                let rewrk_handle = Command::new("rewrk")
+                    .arg(format!("-d{}s", setting.duration))
+                    .arg(format!("--threads={}", setting.threads))
+                    .arg(format!("-c{}", setting.concurrency))
+                    .arg(format!("-h=http://localhost:{}", self.port))
+                    .output();
+                let rewrk_output = rewrk_handle.unwrap();
 
-                // kill server if there's an error while writing `wrk` output to the file
+                // kill server if there's an error while writing `rewrk` output to the file
                 if let Err(err_message) = fs::write(
                     format!("perf/{}/{}.txt", self.binary, setting.concurrency),
-                    wrk_output.stdout,
+                    rewrk_output.stdout,
                 ) {
                     server_handle.kill().unwrap();
                     println!("\n[ERROR] Couldn't write to file: {}", err_message);
@@ -179,12 +176,11 @@ async fn main() {
     print_benchmark_message();
     print_expected_time(frameworks.len());
 
-    for (index, current_framework) in frameworks.iter().enumerate() {
-        current_framework.run_benchmark(index).await;
-    }
+    // for (index, current_framework) in frameworks.iter().enumerate() {
+    //     current_framework.run_benchmark(index).await;
+    // }
 
     let sorted_frameworks = sort_framework(&mut frameworks);
-    println!("Sorted - {:#?}", sorted_frameworks);
     write_markdown(&sorted_frameworks);
     write_readme(&frameworks);
 
@@ -312,11 +308,10 @@ fn calculate_results(frameworks: &[Framework]) -> Vec<Stats> {
             });
 
             lazy_static! {
-                static ref LATENCY_RGX: Regex =
-                    Regex::new(r"Latency((\s)*[0-9]*.[0-9]*[a-z]*){3}").unwrap();
-                static ref TOTAL_REQUESTS_RGX: Regex = Regex::new(r"[0-9]+ requests in").unwrap();
+                static ref LATENCY_RGX: Regex = Regex::new(r"([0-9]+.[0-9]+[a-z]+)").unwrap();
+                static ref TOTAL_REQUESTS_RGX: Regex = Regex::new(r"Total:\s[0-9]+\s").unwrap();
                 static ref REQUESTS_PER_SECOND_RGX: Regex =
-                    Regex::new(r"Requests/sec: [0-9]*.[0-9]*").unwrap();
+                    Regex::new(r"Sec:\s[0-9]+.[0-9]+\s").unwrap();
                 static ref LATENCY_PERCENTILE_90: Regex =
                     Regex::new(r"90%\s*[0-9]+.[0-9]*[a-z]").unwrap();
                 static ref LATENCY_PERCENTILE_99: Regex =
@@ -329,16 +324,15 @@ fn calculate_results(frameworks: &[Framework]) -> Vec<Stats> {
 
             let latency_string: String = LATENCY_RGX
                 .find_iter(&benchmark_result)
-                .map(|mat| mat.as_str())
+                .map(|mat| format!("{} ", mat.as_str()))
                 .collect();
-            let mut latencies = latency_string.split_whitespace().skip(1);
+            let mut latencies = latency_string.split_whitespace();
             let avg_latency = latencies.next().unwrap_or("99999");
-            let max_latency = latencies.nth(1).unwrap_or("99999");
+            let max_latency = latencies.nth(2).unwrap_or("99999");
             let total_requests_string: String = TOTAL_REQUESTS_RGX
                 .find_iter(&benchmark_result)
                 .map(|mat| mat.as_str())
                 .collect();
-            println!("Total requets string  - {}", total_requests_string);
             let requests_per_sec_string: String = REQUESTS_PER_SECOND_RGX
                 .find_iter(&benchmark_result)
                 .map(|mat| mat.as_str())
@@ -346,7 +340,7 @@ fn calculate_results(frameworks: &[Framework]) -> Vec<Stats> {
 
             let total_requests = total_requests_string
                 .split_whitespace()
-                .next()
+                .nth(1)
                 .unwrap_or("0");
             let req_per_sec = requests_per_sec_string
                 .split_whitespace()
@@ -425,9 +419,9 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 
 ## Benchmarking tool
-The benchmarks have been performed using [wrk](https://github.com/wg/wrk), locally. 
+The benchmarks have been performed using [rewrk](https://github.com/ChillFish8/rewrk), locally. 
 
-Check the raw output from wrk [here](https://github.com/Ishtmeet-Singh/rust-framework-benchmarks/tree/master/perf).
+Check the raw output from rewrk [here](https://github.com/Ishtmeet-Singh/rust-framework-benchmarks/tree/master/perf).
 
 
 ## Try it yourself
