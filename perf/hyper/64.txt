@@ -1,10 +1,10 @@
 Beginning round 1...
-Benchmarking 64 connections @ http://localhost:3000 for 1 minute(s)
+Benchmarking 64 connections @ http://localhost:3000 for 2 second(s)
   Latencies:
     Avg      Stdev    Min      Max      
-    0.28ms   0.10ms   0.01ms   7.75ms   
+    0.29ms   0.14ms   0.01ms   3.70ms   
   Requests:
-    Total: 13656401 Req/Sec: 227611.16
+    Total: 445499  Req/Sec: 222931.52
   Transfer:
-    Total: 1.12 GB Transfer Rate: 19.10 MB/Sec
+    Total: 37.39 MB Transfer Rate: 18.71 MB/Sec
 
