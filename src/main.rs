@@ -25,22 +25,22 @@ infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
     Settings {
         concurrency: 16,
         threads: 2,
-        duration: 25,
+        duration: 60,
     },
     Settings {
         concurrency: 64,
         threads: 2,
-        duration: 25,
+        duration: 60,
     },
     Settings {
         concurrency: 128,
         threads: 2,
-        duration: 25,
+        duration: 60,
     },
     Settings {
         concurrency: 256,
         threads: 2,
-        duration: 25,
+        duration: 60,
     },
 ]);
 
@@ -72,8 +72,6 @@ struct Framework {
 
 impl Framework {
     fn print_log(&self, settings: &Settings, framework_index: usize, bench_index: usize) {
-        let goal = settings.duration;
-        let pb = ProgressBar::new(goal.into());
         println!(
             " {} {} {} {} {}\n",
             format!(
@@ -96,19 +94,21 @@ impl Framework {
                 .black()
                 .on_bright_yellow(),
         );
-        pb.set_style(
-            ProgressStyle::default_bar()
-                .template("{spinner:.cyan} ❖⎨{bar:40.white}⎬❖ ⏰ [{elapsed_precise}]")
-                .progress_chars(r"▋░"),
-        );
-        let duration = settings.duration + 1;
+        // let goal = settings.duration;
+        // let pb = ProgressBar::new(goal.into());
+        // pb.set_style(
+        //     ProgressStyle::default_bar()
+        //         .template("{spinner:.cyan} ❖⎨{bar:40.white}⎬❖ ⏰ [{elapsed_precise}]")
+        //         .progress_chars(r"▋░"),
+        // );
+        // let duration = settings.duration + 1;
 
-        std::thread::spawn(move || {
-            for _ in 0..duration {
-                pb.inc((1_u32).into());
-                std::thread::sleep(Duration::from_secs(1));
-            }
-        });
+        // std::thread::spawn(move || {
+        //     for _ in 0..duration {
+        //         pb.inc((1_u32).into());
+        //         std::thread::sleep(Duration::from_secs(1));
+        //     }
+        // });
     }
 
     #[must_use = "Require handle to kill it once the benchmark finishes"]
