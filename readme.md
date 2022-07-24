@@ -8,36 +8,46 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 
 ## Frameworks included
-**[Actix-Web](https://actix.rs)**
-**[Hyper](https://hyper.rs)**
-**[Axum](https://github.com/tokio-rs/axum)**
-**[Ntex](https://github.com/ntex-rs/ntex)**
-**[Rocket](https://rocket.rs)**
-**[Tide](https://github.com/http-rs/tide)**
-**[Viz](https://github.com/viz-rs/viz)**
-**[Warp](https://github.com/seanmonstar/warp)**
-**[Thruster](https://github.com/thruster-rs/Thruster)**
-**[Salvo](https://github.com/salvo-rs/salvo)**
-**[Poem](https://github.com/poem-web/poem)**
-**[Astra](https://github.com/ibraheemdev/astra)**
+**[Actix-Web](https://actix.rs)** - A powerful, pragmatic, and extremely fast web framework for Rust<br>
+**[Hyper](https://hyper.rs)** - Fast and safe HTTP for the Rust language<br>
+**[Axum](https://github.com/tokio-rs/axum)** - Web application framework that focuses on ergonomics and modularity<br>
+**[Warp](https://github.com/seanmonstar/warp)** - A super-easy, composable, web server framework for warp speeds<br>
+**[Ntex](https://github.com/ntex-rs/ntex)** - Framework for composable network services<br>
+**[Rocket](https://rocket.rs)** - Write fast, secure web applications without sacrificing flexibility, usability, or type safety<br>
+**[Tide](https://github.com/http-rs/tide)** - Minimal and pragmatic Rust web application framework built for rapid development<br>
+**[May-MiniHttp](https://github.com/Xudong-Huang/may_minihttp)** - Mini http server that implemented on top of may<br>
+**[Viz](https://github.com/viz-rs/viz)** - Fast, robust, flexible, lightweight web framework for Rust<br>
+**[Tokio-minihttp](https://github.com/tokio-rs/tokio-minihttp)** - Proof-of-concept implementation of a simple HTTP/1.1 server using Tokio.<br>
+**[Thruster](https://github.com/thruster-rs/Thruster)** - A fast and intuitive rust web framework<br>
+**[Salvo](https://github.com/salvo-rs/salvo)** - Simple and powerful Rust web backend framework<br>
+**[Poem](https://github.com/poem-web/poem)** - A full-featured and easy-to-use web framework<br>
+**[Gotham](https://github.com/gotham-rs/gotham)** - A flexible web framework that promotes stability, safety, security and speed.<br>
+**[Astra](https://github.com/ibraheemdev/astra)** - Synchronous HTTP server built on top of hyper<br>
+**[Nickel](https://github.com/nickel-org/nickel.rs)** - An expressjs inspired framework for rust<br>
+**[Roa](https://github.com/Hexilee/roa)** - Roa is an async web framework inspired by koajs, lightweight but powerful.<br>
 # Results
 |   Concurrency: 10   |   Duration: 20 secs   |   Threads: 1   |
 |:-------------------:|:---------------------:|:--------------:|
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Actix-Web**|221,736|33.65us|1.28ms|4,456,957|
-|**Ntex**|214,402|38.24us|2.61ms|4,309,574|
-|**Hyper**|206,014|36.03us|846.00us|4,140,979|
-|**Axum**|202,769|37.06us|0.88ms|4,075,603|
-|**Viz**|202,607|37.02us|0.98ms|4,072,421|
-|**Thruster**|202,020|36.58us|1.24ms|4,040,503|
-|**Warp**|200,752|39.75us|10.07ms|4,035,115|
-|**Poem**|200,752|39.75us|10.07ms|4,035,115|
-|**Astra**|200,752|39.75us|10.07ms|4,035,115|
-|**Salvo**|195,276|2.75ms|228.88ms|3,908,804|
-|**Rocket**|157,179|51.79us|0.99ms|3,159,312|
-|**Tide**|132,724|66.33us|0.94ms|2,667,815|
+|**May-MiniHttp** |235,648|29.22us|776.00us|4,736,581|
+|**Tokio-minihttp** |232,239|34.11us|1.10ms|4,668,143|
+|**Actix-Web** |224,918|33.07us|0.98ms|4,520,838|
+|**Astra** |216,361|34.30us|0.95ms|4,348,813|
+|**Ntex** |212,492|38.29us|2.24ms|4,271,053|
+|**Poem** |205,506|36.87us|0.87ms|4,130,635|
+|**Roa** |204,852|36.53us|2.53ms|4,117,626|
+|**Hyper** |204,825|36.22us|789.00us|4,117,072|
+|**Viz** |203,405|36.95us|0.94ms|4,088,546|
+|**Axum** |203,300|37.00us|609.00us|4,086,292|
+|**Salvo** |202,529|37.08us|0.87ms|4,070,834|
+|**Gotham** |201,790|37.50us|0.89ms|4,056,036|
+|**Thruster** |201,642|36.72us|1.19ms|4,032,956|
+|**Warp** |200,405|37.08us|0.89ms|4,028,158|
+|**Nickel** |165,625|47.22us|1.54ms|3,329,182|
+|**Rocket** |157,943|51.53us|1.22ms|3,174,762|
+|**Tide** |132,598|66.32us|1.26ms|2,665,238|
 
 
 |   Concurrency: 50   |   Duration: 20 secs   |   Threads: 1   |
@@ -45,94 +55,71 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Hyper**|239,636|122.97us|3.03ms|4,793,199|
-|**Ntex**|238,966|118.37us|3.18ms|4,803,828|
-|**Actix-Web**|238,265|117.53us|3.14ms|4,789,505|
-|**Thruster**|238,040|123.15us|2.85ms|4,785,022|
-|**Warp**|236,274|122.81us|1.26ms|4,749,618|
-|**Poem**|236,274|122.81us|1.26ms|4,749,618|
-|**Astra**|236,274|122.81us|1.26ms|4,749,618|
-|**Viz**|232,920|125.29us|2.83ms|4,682,091|
-|**Axum**|232,405|126.09us|2.94ms|4,671,724|
-|**Salvo**|231,646|126.35us|3.12ms|4,656,728|
-|**Rocket**|183,447|190.94us|3.04ms|3,669,371|
-|**Tide**|125,202|325.50us|10.90ms|2,516,868|
+|**Tokio-minihttp** |246,010|122.56us|3.26ms|4,945,307|
+|**Actix-Web** |240,409|116.24us|3.08ms|4,832,699|
+|**Hyper** |239,073|123.09us|10.19ms|4,781,888|
+|**Roa** |238,927|123.30us|10.08ms|4,778,874|
+|**Warp** |237,486|123.02us|3.28ms|4,774,028|
+|**Thruster** |235,972|124.39us|3.27ms|4,743,501|
+|**Ntex** |235,645|121.45us|3.54ms|4,736,764|
+|**Poem** |232,814|126.28us|2.26ms|4,680,059|
+|**Salvo** |232,419|126.10us|3.37ms|4,672,112|
+|**Viz** |232,290|125.97us|3.23ms|4,669,496|
+|**Axum** |232,063|126.49us|2.56ms|4,664,861|
+|**Astra** |229,805|125.07us|3.04ms|4,619,556|
+|**Gotham** |228,238|128.09us|2.86ms|4,565,259|
+|**Rocket** |187,055|186.74us|2.82ms|3,760,161|
+|**May-MiniHttp** |178,296|162.37us|3.20ms|3,584,132|
+|**Nickel** |170,152|53.56us|3.18ms|3,420,330|
+|**Tide** |126,717|312.00us|11.17ms|2,547,331|
 
 
-|   Concurrency: 100   |   Duration: 25 secs   |   Threads: 1   |
+|   Concurrency: 250   |   Duration: 25 secs   |   Threads: 1   |
 |:-------------------:|:---------------------:|:--------------:|
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Hyper**|239,716|227.39us|4.36ms|5,993,663|
-|**Warp**|236,051|230.70us|5.56ms|5,902,299|
-|**Poem**|236,051|230.70us|5.56ms|5,902,299|
-|**Astra**|236,051|230.70us|5.56ms|5,902,299|
-|**Thruster**|235,311|231.07us|4.46ms|5,883,609|
-|**Ntex**|234,239|230.64us|4.71ms|5,880,301|
-|**Salvo**|231,484|235.93us|5.69ms|5,788,179|
-|**Axum**|230,426|237.52us|4.73ms|5,784,672|
-|**Viz**|230,382|238.13us|5.85ms|5,760,379|
-|**Actix-Web**|211,582|255.46us|5.94ms|5,290,415|
-|**Rocket**|171,840|375.91us|5.37ms|4,296,787|
-|**Tide**|51,864|2.09ms|25.77ms|1,296,877|
+|**Tokio-minihttp** |246,524|542.59us|11.42ms|6,165,677|
+|**Roa** |230,863|561.03us|10.30ms|5,774,358|
+|**Thruster** |229,312|562.71us|11.20ms|5,735,575|
+|**Hyper** |227,603|567.79us|11.37ms|5,693,512|
+|**Salvo** |225,378|574.50us|9.75ms|5,659,272|
+|**Poem** |224,342|578.87us|8.91ms|5,611,777|
+|**Axum** |224,282|576.80us|11.57ms|5,609,777|
+|**Viz** |223,658|578.69us|10.93ms|5,595,360|
+|**Gotham** |221,153|586.37us|10.52ms|5,531,353|
+|**Astra** |218,480|383.67us|11.14ms|5,464,477|
+|**Warp** |216,154|597.66us|11.04ms|5,407,171|
+|**Ntex** |202,407|640.25us|11.95ms|5,063,459|
+|**Nickel** |168,277|54.39us|11.79ms|4,225,405|
+|**Rocket** |157,985|0.91ms|11.13ms|3,955,296|
+|**Actix-Web** |146,162|0.89ms|14.80ms|3,657,475|
+|**May-MiniHttp** |133,933|0.96ms|11.25ms|3,352,477|
+|**Tide** |42,297|6.58ms|52.68ms|1,057,900|
 
 
-|   Concurrency: 250   |   Duration: 35 secs   |   Threads: 1   |
+|   Concurrency: 700   |   Duration: 25 secs   |   Threads: 1   |
 |:-------------------:|:---------------------:|:--------------:|
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Warp**|231,270|549.53us|10.46ms|8,097,954|
-|**Poem**|231,270|549.53us|10.46ms|8,097,954|
-|**Astra**|231,270|549.53us|10.46ms|8,097,954|
-|**Hyper**|229,291|556.10us|11.32ms|8,028,181|
-|**Viz**|226,817|561.26us|11.64ms|7,940,626|
-|**Axum**|226,595|561.81us|10.88ms|7,934,399|
-|**Salvo**|224,891|567.86us|8.13ms|7,872,981|
-|**Ntex**|212,607|499.26us|11.42ms|7,464,272|
-|**Thruster**|188,248|21.75ms|1.07s|6,601,620|
-|**Actix-Web**|178,648|594.26us|12.33ms|6,254,651|
-|**Rocket**|152,892|0.94ms|10.66ms|5,356,590|
-|**Tide**|41,902|6.72ms|62.56ms|1,467,116|
-
-
-|   Concurrency: 500   |   Duration: 45 secs   |   Threads: 1   |
-|:-------------------:|:---------------------:|:--------------:|
-
-|   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
-|:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Hyper**|233,384|544.37us|10.12ms|10,506,177|
-|**Warp**|231,365|548.23us|11.35ms|10,414,831|
-|**Poem**|231,365|548.23us|11.35ms|10,414,831|
-|**Astra**|231,365|548.23us|11.35ms|10,414,831|
-|**Axum**|226,180|562.19us|11.05ms|10,180,997|
-|**Salvo**|225,676|563.49us|10.46ms|10,158,000|
-|**Viz**|225,447|565.57us|10.31ms|10,148,821|
-|**Ntex**|213,931|495.19us|11.32ms|9,629,432|
-|**Thruster**|204,331|6.55ms|688.82ms|9,203,770|
-|**Actix-Web**|183,286|577.29us|12.30ms|8,250,370|
-|**Rocket**|152,404|0.92ms|10.41ms|6,866,194|
-|**Tide**|41,598|6.05ms|70.86ms|1,872,586|
-
-
-|   Concurrency: 700   |   Duration: 60 secs   |   Threads: 1   |
-|:-------------------:|:---------------------:|:--------------:|
-
-|   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
-|:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Hyper**|235,606|539.12us|10.52ms|14,140,110|
-|**Warp**|231,148|549.02us|11.13ms|13,872,631|
-|**Poem**|231,148|549.02us|11.13ms|13,872,631|
-|**Astra**|231,148|549.02us|11.13ms|13,872,631|
-|**Axum**|227,333|559.29us|11.58ms|13,643,920|
-|**Viz**|226,947|560.10us|10.95ms|13,643,020|
-|**Salvo**|225,933|562.79us|11.62ms|13,559,195|
-|**Ntex**|212,646|497.99us|11.66ms|12,761,300|
-|**Thruster**|201,655|8.25ms|1.03s|12,112,435|
-|**Actix-Web**|182,703|578.96us|11.12ms|10,964,955|
-|**Rocket**|153,206|0.92ms|10.64ms|9,202,047|
-|**Tide**|41,624|5.90ms|61.40ms|2,498,426|
+|**Tokio-minihttp** |236,782|1.54ms|12.84ms|5,925,632|
+|**Astra** |215,419|391.42us|12.79ms|5,391,856|
+|**Nickel** |163,328|66.66us|174.30ms|4,088,206|
+|**Hyper** |158,300|2.24ms|23.25ms|3,960,196|
+|**Roa** |157,051|2.26ms|21.07ms|3,929,140|
+|**Thruster** |156,376|2.27ms|19.37ms|3,910,608|
+|**Warp** |154,759|2.29ms|20.95ms|3,873,414|
+|**Viz** |154,001|2.30ms|14.58ms|3,852,010|
+|**Axum** |152,893|2.32ms|18.86ms|3,827,680|
+|**Salvo** |151,746|2.33ms|21.53ms|3,807,425|
+|**Poem** |149,537|2.37ms|17.77ms|3,741,057|
+|**Gotham** |148,215|2.40ms|19.91ms|3,710,441|
+|**Rocket** |131,263|2.74ms|17.71ms|3,289,927|
+|**Ntex** |128,846|2.75ms|17.73ms|3,228,909|
+|**Actix-Web** |127,935|2.77ms|16.29ms|3,208,440|
+|**May-MiniHttp** |127,003|2.78ms|19.85ms|3,180,523|
+|**Tide** |42,284|18.42ms|130.13ms|1,058,387|
 
 
 

@@ -33,24 +33,14 @@ infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
         duration: 20,
     },
     Settings {
-        concurrency: 100,
+        concurrency: 250,
         threads: 1,
         duration: 25,
     },
     Settings {
-        concurrency: 250,
-        threads: 1,
-        duration: 35,
-    },
-    Settings {
-        concurrency: 500,
-        threads: 1,
-        duration: 45,
-    },
-    Settings {
         concurrency: 700,
         threads: 1,
-        duration: 60,
+        duration: 25,
     },
 ]);
 
@@ -77,6 +67,7 @@ struct Framework {
     port: u32,
     binary: &'static str,
     url: &'static str,
+    description: &'static str,
 }
 
 impl Framework {
@@ -110,7 +101,7 @@ impl Framework {
                 .template("{spinner:.cyan} ❖⎨{bar:40.white}⎬❖ ⏰ [{elapsed_precise}]")
                 .progress_chars(r"▋░"),
         );
-        let duration = settings.duration;
+        let duration = settings.duration + 1;
 
         std::thread::spawn(move || {
             for _ in 0..duration {
@@ -170,7 +161,7 @@ impl Framework {
                     std::process::exit(-1);
                 }
                 // wait a bit to free system resources
-                std::thread::sleep(Duration::from_secs(2));
+                std::thread::sleep(Duration::from_secs(1));
             });
 
         if let Err(err_message) = server_handle.kill() {
@@ -182,17 +173,18 @@ impl Framework {
 
 #[tokio::main]
 async fn main() {
-    // let mut frameworks = parse_frameworks();
-    // print_benchmark_message();
-    // print_expected_time(frameworks.len());
+    let mut frameworks = parse_frameworks();
+    print_benchmark_message();
+    print_expected_time(frameworks.len());
 
-    // for (index, current_framework) in frameworks.iter().enumerate() {
-    //     current_framework.run_benchmark(index).await;
-    // }
+    for (index, current_framework) in frameworks.iter().enumerate() {
+        current_framework.run_benchmark(index).await;
+    }
 
-    // let sorted_frameworks = sort_framework(&mut frameworks);
-    // write_markdown(&sorted_frameworks);
-    // write_readme(&frameworks);
+    let sorted_frameworks = sort_framework(&mut frameworks);
+    println!("Sorted - {:#?}", sorted_frameworks);
+    write_markdown(&sorted_frameworks);
+    write_readme(&frameworks);
 
     // optional - disable it if you've not forked yet
     commit_and_push();
@@ -206,8 +198,8 @@ fn write_readme(frameworks: &Vec<Framework>) {
     for framework in frameworks {
         writeln!(
             &mut markdown_content,
-            "**[{}]({})**",
-            framework.name, framework.url
+            "**[{}]({})** - {}<br>",
+            framework.name, framework.url, framework.description
         )
         .unwrap();
     }
@@ -246,9 +238,8 @@ fn commit_and_push() {
         .unwrap();
     let push_output = Command::new("git").arg("push").output().unwrap();
     println!(
-        "{}\n{}\n\n{}\n{}",
+        "{}\n\n{}\n{}",
         String::from_utf8_lossy(&add_output.stdout),
-        String::from_utf8_lossy(&add_output.stderr),
         String::from_utf8_lossy(&commit_output.stdout),
         String::from_utf8_lossy(&push_output.stdout),
     )
@@ -263,11 +254,24 @@ fn write_markdown(sorted_frameworks: &[Vec<Stats>]) {
         for framework_stat in batches {
             writeln!(
                 &mut markdown_string,
-                "|**{}**|{}|{}|{}|{}|",
+                "|**{}** {}|{}|{}|{}|{}|",
                 framework_stat.name,
+                if framework_stat.average_latency == "99999" {
+                    "(FAIL)"
+                } else {
+                    ""
+                },
                 (framework_stat.requests_per_second as u64).to_formatted_string(&Locale::en),
-                framework_stat.average_latency,
-                framework_stat.max_latency,
+                if framework_stat.average_latency == "99999" {
+                    "FAIL".to_string()
+                } else {
+                    framework_stat.average_latency.to_string()
+                },
+                if framework_stat.max_latency == "99999" {
+                    "FAIL".to_string()
+                } else {
+                    framework_stat.max_latency.to_string()
+                },
                 (framework_stat.total_requests as u64).to_formatted_string(&Locale::en)
             )
             .unwrap();
@@ -294,7 +298,16 @@ fn calculate_results(frameworks: &[Framework]) -> Vec<Stats> {
                 "perf/{}/{}.txt",
                 framework.binary, setting.concurrency
             ))
-            .unwrap();
+            .unwrap_or_else(|_| {
+                println!(
+                    "\
+                    Couldn't find the file: perf/{}/{}.txt. {} failed to finish the tests successfully, it will not be printed out in the results.
+                    ",
+                    framework.binary, setting.concurrency, framework.binary
+                );
+                "".to_string()
+                // std::process::exit(-1);
+            });
 
             lazy_static! {
                 static ref LATENCY_RGX: Regex =
@@ -307,26 +320,36 @@ fn calculate_results(frameworks: &[Framework]) -> Vec<Stats> {
                 static ref LATENCY_PERCENTILE_99: Regex =
                     Regex::new(r"99%\s*[0-9]+.[0-9]*[a-z]").unwrap();
             }
+            // let latency_perc_90 = LATENCY_PERCENTILE_90
+            //     .find_iter(&)my_string
+            //     .map(|mat| mat.as_str())
+            //     .collect::<String>();
 
             let latency_string: String = LATENCY_RGX
                 .find_iter(&benchmark_result)
                 .map(|mat| mat.as_str())
                 .collect();
             let mut latencies = latency_string.split_whitespace().skip(1);
-            let avg_latency = latencies.next().unwrap();
-            let max_latency = latencies.nth(1).unwrap();
-
+            let avg_latency = latencies.next().unwrap_or("99999");
+            let max_latency = latencies.nth(1).unwrap_or("99999");
             let total_requests_string: String = TOTAL_REQUESTS_RGX
                 .find_iter(&benchmark_result)
                 .map(|mat| mat.as_str())
                 .collect();
+            println!("Total requets string  - {}", total_requests_string);
             let requests_per_sec_string: String = REQUESTS_PER_SECOND_RGX
                 .find_iter(&benchmark_result)
                 .map(|mat| mat.as_str())
                 .collect();
 
-            let total_requests = total_requests_string.split_whitespace().next().unwrap();
-            let req_per_sec = requests_per_sec_string.split_whitespace().nth(1).unwrap();
+            let total_requests = total_requests_string
+                .split_whitespace()
+                .next()
+                .unwrap_or("0");
+            let req_per_sec = requests_per_sec_string
+                .split_whitespace()
+                .nth(1)
+                .unwrap_or("0");
 
             statistics.push(Stats {
                 requests_per_second: req_per_sec.parse::<f64>().unwrap(),
@@ -347,7 +370,6 @@ fn sort_framework(frameworks: &mut [Framework]) -> Vec<Vec<Stats>> {
 
     let mut sorted_frameworks = Vec::new();
 
-    // let sorted_frameworks: Vec<Vec<Option<Stats>>> = vec![vec![None, 4]; BENCHMARK_SETTINGS.len()];
     let chunks = vec.chunks_mut(frameworks.len());
     chunks.for_each(|curr| {
         curr.sort_by(|curr, next| {
