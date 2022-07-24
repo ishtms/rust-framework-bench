@@ -22,26 +22,26 @@ macro_rules! infer_len_slice {
 }
 
 infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
-    Settings {
-        concurrency: 8,
-        threads: 1,
-        duration: 30,
-    },
-    Settings {
-        concurrency: 64,
-        threads: 1,
-        duration: 30,
-    },
-    Settings {
-        concurrency: 128,
-        threads: 1,
-        duration: 30,
-    },
-    Settings {
-        concurrency: 256,
-        threads: 1,
-        duration: 30,
-    },
+    // Settings {
+    //     concurrency: 8,
+    //     threads: 1,
+    //     duration: 30,
+    // },
+    // Settings {
+    //     concurrency: 64,
+    //     threads: 1,
+    //     duration: 30,
+    // },
+    // Settings {
+    //     concurrency: 128,
+    //     threads: 1,
+    //     duration: 30,
+    // },
+    // Settings {
+    //     concurrency: 256,
+    //     threads: 1,
+    //     duration: 30,
+    // },
     Settings {
         concurrency: 512,
         threads: 1,
@@ -187,7 +187,6 @@ async fn main() {
     }
 
     let sorted_frameworks = sort_framework(&mut frameworks);
-    println!("Sorted - {:#?}", sorted_frameworks);
     write_markdown(&sorted_frameworks);
     write_readme(&frameworks);
 
@@ -231,7 +230,7 @@ fn write_readme(frameworks: &Vec<Framework>) {
         "{}\n{}\n{}",
         split_string[0], markdown_content, split_string[1]
     );
-    fs::write("./readme.md", new_md).unwrap();
+    fs::write("./readme.test.md", new_md).unwrap();
 }
 
 fn commit_and_push() {
