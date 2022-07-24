@@ -333,8 +333,8 @@ fn sort_framework(frameworks: &mut [Framework]) -> Vec<Vec<Stats>> {
 fn start_bench(setting: &Settings, port: u32) -> Output {
     Command::new("rewrk")
         .arg(format!("-d{}s", setting.duration))
-        .arg(format!("--threads={}", setting.threads))
-        .arg(format!("-c{}", setting.concurrency))
+        .arg(format!("-t={}", setting.threads))
+        .arg(format!("-c={}", setting.concurrency))
         .arg(format!("-h=http://localhost:{}", port))
         .output()
         .unwrap()

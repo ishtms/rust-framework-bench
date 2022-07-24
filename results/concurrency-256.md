@@ -1,4 +1,4 @@
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Tokio-minihttp** |235,784|1.08ms|25.87ms|1,177,838|
-|**Hyper** |191,785|1.33ms|18.64ms|958,108|
+|**Hyper** (FAIL)|0|FAIL|FAIL|0|
+|**Tokio-minihttp** (FAIL)|0|FAIL|FAIL|0|

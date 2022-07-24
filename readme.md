@@ -1,7 +1,7 @@
 
 # Rust framework benchmarks
 
-Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
+Benchmarking utility to test the performance of all the rust web frameworks. Built with [rust](https://rust-lang.org) 🚀.
 
 # Demo
 ![Demo](https://s4.gifyu.com/images/outputf55c6e3d5b6a1f8e.gif)

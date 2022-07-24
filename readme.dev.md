@@ -1,6 +1,6 @@
 # Rust framework benchmarks
 
-Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
+Benchmarking utility to test the performance of all the rust web frameworks. Built with [rust](https://rust-lang.org) 🚀.
 
 # Demo
 ![Demo](https://s4.gifyu.com/images/outputf55c6e3d5b6a1f8e.gif)
@@ -15,8 +15,8 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Tokio-minihttp** |242,517|0.53ms|4.31ms|1,211,949|
-|**Hyper** |209,275|0.61ms|7.70ms|1,045,638|
+|**Hyper** (FAIL)|0|FAIL|FAIL|0|
+|**Tokio-minihttp** (FAIL)|0|FAIL|FAIL|0|
 
 
 |   Concurrency: 256   |   Duration: 5 secs   |   Threads: 2   |
@@ -24,8 +24,8 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Tokio-minihttp** |235,784|1.08ms|25.87ms|1,177,838|
-|**Hyper** |191,785|1.33ms|18.64ms|958,108|
+|**Hyper** (FAIL)|0|FAIL|FAIL|0|
+|**Tokio-minihttp** (FAIL)|0|FAIL|FAIL|0|
 
 
 
