@@ -29,17 +29,17 @@ infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
     },
     Settings {
         concurrency: 64,
-        threads: 1,
+        threads: 2,
+        duration: 25,
+    },
+    Settings {
+        concurrency: 128,
+        threads: 2,
         duration: 25,
     },
     Settings {
         concurrency: 256,
-        threads: 1,
-        duration: 25,
-    },
-    Settings {
-        concurrency: 512,
-        threads: 1,
+        threads: 2,
         duration: 25,
     },
 ]);
