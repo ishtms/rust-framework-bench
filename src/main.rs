@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 use std::{
     fmt::Write,
     fs,
-    process::{Child, Command},
+    process::{Child, Command, Output},
     time::Duration,
 };
 
@@ -35,6 +35,8 @@ static OUTPUT_MD_FILE: &str = "./readme.dev.md";
 const DEFAULT_DURATION: u32 = 40_u32;
 #[cfg(debug_assertions)]
 const DEFAULT_DURATION: u32 = 5_u32;
+
+static TABLE_SEPARATOR: &str = "|:-------------------:|:---------------------:|:--------------:|\n";
 
 static READ_ME_STRING: &str = include_str!("./utils/readme_block.txt");
 
@@ -90,43 +92,13 @@ struct Framework {
 
 impl Framework {
     fn print_log(&self, settings: &Settings, framework_index: usize, bench_index: usize) {
-        println!(
-            " {} {} {} {} {}\n",
-            format!(
-                " ⁅{}/{}⁆ ",
-                framework_index * BENCHMARK_SETTINGS.len() + bench_index + 1,
-                BENCHMARK_SETTINGS.len() * parse_frameworks().len()
-            )
-            .black()
-            .on_bright_cyan(),
-            format!(" 🚀 RUNNING: {} ", self.name)
-                .bright_white()
-                .on_bright_red(),
-            format!(" 💪 CONCURRENCY: {} ", settings.concurrency)
-                .black()
-                .on_bright_white(),
-            format!(" 🪡 REWRK THREADS: {} ", settings.threads)
-                .bright_white()
-                .on_bright_black(),
-            format!(" ⏰ DURATION: {}s ", settings.duration)
-                .black()
-                .on_bright_yellow(),
+        print_current_info(
+            framework_index,
+            bench_index,
+            settings,
+            &self.name.to_string(),
         );
-        let goal = settings.duration;
-        let pb = ProgressBar::new(goal.into());
-        pb.set_style(
-            ProgressStyle::default_bar()
-                .template("{spinner:.cyan} ❖⎨{bar:40.white}⎬❖ ⏰ [{elapsed_precise}]")
-                .progress_chars(r"▋░"),
-        );
-        let duration = settings.duration + 1;
-
-        std::thread::spawn(move || {
-            for _ in 0..duration {
-                pb.inc((1_u32).into());
-                std::thread::sleep(Duration::from_secs(1));
-            }
-        });
+        show_progress_bar(settings);
     }
 
     #[must_use = "Require handle to kill it once the benchmark finishes"]
@@ -160,26 +132,20 @@ impl Framework {
                 self.print_log(setting, framework_index, bench_index);
                 // wait 2 secs till the server starts running (some servers take more time to start - for example tide)
                 std::thread::sleep(Duration::from_secs(1));
-                let rewrk_handle = Command::new("rewrk")
-                    .arg(format!("-d{}s", setting.duration))
-                    .arg(format!("--threads={}", setting.threads))
-                    .arg(format!("-c{}", setting.concurrency))
-                    .arg(format!("-h=http://localhost:{}", self.port))
-                    .output();
+                let rewrk_output = start_bench(setting, self.port);
 
-                let rewrk_output = rewrk_handle.unwrap();
                 if !rewrk_output.stderr.is_empty() {
                     println!("Error: {}", String::from_utf8_lossy(&rewrk_output.stderr));
                 }
+
                 // kill server if there's an error while writing `rewrk` output to the file
-                if let Err(err_message) = fs::write(
-                    format!("perf/{}/{}.txt", self.binary, setting.concurrency),
-                    rewrk_output.stdout,
-                ) {
+                let file_name = format!("perf/{}/{}.txt", self.binary, setting.concurrency);
+                if let Err(err_message) = fs::write(file_name, rewrk_output.stdout) {
                     server_handle.kill().unwrap();
                     println!("\n[ERROR] Couldn't write to file: {}", err_message);
                     std::process::exit(-1);
                 }
+
                 // wait a bit to free system resources
                 std::thread::sleep(Duration::from_secs(1));
             });
@@ -213,7 +179,6 @@ async fn main() {
 }
 
 fn write_readme(frameworks: &Vec<Framework>) {
-    println!("READ ME STRING: {}", READ_ME_STRING);
     let split_string: Vec<&str> = READ_ME_STRING.split("==SPLIT==").collect();
     let mut markdown_content = String::new();
 
@@ -228,8 +193,8 @@ fn write_readme(frameworks: &Vec<Framework>) {
     }
     writeln!(&mut markdown_content, "# Results").unwrap();
     BENCHMARK_SETTINGS.iter().for_each(|curr| {
-        let current_result =
-            fs::read_to_string(format!("results/concurrency-{}.md", curr.concurrency)).unwrap();
+        let file_path = format!("results/concurrency-{}.md", curr.concurrency);
+        let current_result = fs::read_to_string(file_path).unwrap();
 
         writeln!(
             &mut markdown_content,
@@ -237,11 +202,7 @@ fn write_readme(frameworks: &Vec<Framework>) {
             curr.concurrency, curr.duration, curr.threads
         )
         .unwrap();
-        writeln!(
-            &mut markdown_content,
-            "|:-------------------:|:---------------------:|:--------------:|\n",
-        )
-        .unwrap();
+        writeln!(&mut markdown_content, "{}", TABLE_SEPARATOR).unwrap();
         writeln!(&mut markdown_content, "{}\n", current_result).unwrap();
     });
 
@@ -249,7 +210,6 @@ fn write_readme(frameworks: &Vec<Framework>) {
         "{}\n{}\n{}",
         split_string[0], markdown_content, split_string[1]
     );
-    println!("Writing to {}", OUTPUT_MD_FILE);
     fs::write(OUTPUT_MD_FILE, new_md).unwrap();
 }
 
@@ -318,20 +278,7 @@ fn calculate_results(frameworks: &[Framework]) -> Vec<Stats> {
     // for every setting type, fetch all frameworks stats
     for setting in &BENCHMARK_SETTINGS {
         for framework in frameworks {
-            let benchmark_result = fs::read_to_string(format!(
-                "perf/{}/{}.txt",
-                framework.binary, setting.concurrency
-            ))
-            .unwrap_or_else(|_| {
-                println!(
-                    "\
-                    Couldn't find the file: perf/{}/{}.txt. {} failed to finish the tests successfully, it will not be printed out in the results.
-                    ",
-                    framework.binary, setting.concurrency, framework.binary
-                );
-                "".to_string()
-                // std::process::exit(-1);
-            });
+            let benchmark_result = read_perf_data(framework.binary, setting.concurrency);
 
             lazy_static! {
                 static ref LATENCY_RGX: Regex = Regex::new(r"([0-9]+.[0-9]+[a-z]+)").unwrap();
@@ -343,44 +290,22 @@ fn calculate_results(frameworks: &[Framework]) -> Vec<Stats> {
                 static ref LATENCY_PERCENTILE_99: Regex =
                     Regex::new(r"99%\s*[0-9]+.[0-9]*[a-z]").unwrap();
             }
+            // ^ TODO: Add 95 and 99 %ile
             // let latency_perc_90 = LATENCY_PERCENTILE_90
             //     .find_iter(&)my_string
             //     .map(|mat| mat.as_str())
             //     .collect::<String>();
 
-            let latency_string: String = LATENCY_RGX
-                .find_iter(&benchmark_result)
-                .map(|mat| format!("{} ", mat.as_str()))
-                .collect();
-            let mut latencies = latency_string.split_whitespace();
-            let avg_latency = latencies.next().unwrap_or("99999");
-            let max_latency = latencies.nth(2).unwrap_or("99999");
-            let total_requests_string: String = TOTAL_REQUESTS_RGX
-                .find_iter(&benchmark_result)
-                .map(|mat| mat.as_str())
-                .collect();
-            let requests_per_sec_string: String = REQUESTS_PER_SECOND_RGX
-                .find_iter(&benchmark_result)
-                .map(|mat| mat.as_str())
-                .collect();
+            let framework_stats: Stats = calculate_stats(
+                framework.name,
+                &LATENCY_RGX,
+                &TOTAL_REQUESTS_RGX,
+                &REQUESTS_PER_SECOND_RGX,
+                &benchmark_result,
+                setting.concurrency,
+            );
 
-            let total_requests = total_requests_string
-                .split_whitespace()
-                .nth(1)
-                .unwrap_or("0");
-            let req_per_sec = requests_per_sec_string
-                .split_whitespace()
-                .nth(1)
-                .unwrap_or("0");
-
-            statistics.push(Stats {
-                requests_per_second: req_per_sec.parse::<f64>().unwrap(),
-                name: framework.name.to_string(),
-                average_latency: avg_latency.to_string(),
-                max_latency: max_latency.to_string(),
-                total_requests: total_requests.parse().unwrap(),
-                concurrency: setting.concurrency,
-            })
+            statistics.push(framework_stats)
         }
     }
     statistics
@@ -403,6 +328,122 @@ fn sort_framework(frameworks: &mut [Framework]) -> Vec<Vec<Stats>> {
     });
 
     sorted_frameworks
+}
+
+fn start_bench(setting: &Settings, port: u32) -> Output {
+    Command::new("rewrk")
+        .arg(format!("-d{}s", setting.duration))
+        .arg(format!("--threads={}", setting.threads))
+        .arg(format!("-c{}", setting.concurrency))
+        .arg(format!("-h=http://localhost:{}", port))
+        .output()
+        .unwrap()
+}
+
+fn show_progress_bar(settings: &Settings) {
+    let goal = settings.duration;
+    let pb = ProgressBar::new(goal.into());
+    pb.set_style(
+        ProgressStyle::default_bar()
+            .template("{spinner:.cyan} ❖⎨{bar:40.white}⎬❖ ⏰ [{elapsed_precise}]")
+            .progress_chars(r"▋░"),
+    );
+    let duration = settings.duration + 1;
+
+    std::thread::spawn(move || {
+        for _ in 0..duration {
+            pb.inc((1_u32).into());
+            std::thread::sleep(Duration::from_secs(1));
+        }
+    });
+}
+
+fn calculate_stats(
+    framework_name: &str,
+    latency_regex: &Regex,
+    requests_regex: &Regex,
+    rps_regex: &Regex,
+    benchmark_result: &str,
+    concurrency: u32,
+) -> Stats {
+    let latency_string: String = latency_regex
+        .find_iter(&benchmark_result)
+        .map(|mat| format!("{} ", mat.as_str()))
+        .collect();
+    let mut latencies = latency_string.split_whitespace();
+    let avg_latency = latencies.next().unwrap_or("99999");
+    let max_latency = latencies.nth(2).unwrap_or("99999");
+    let total_requests_string: String = requests_regex
+        .find_iter(&benchmark_result)
+        .map(|mat| mat.as_str())
+        .collect();
+    let requests_per_sec_string: String = rps_regex
+        .find_iter(&benchmark_result)
+        .map(|mat| mat.as_str())
+        .collect();
+
+    let total_requests = total_requests_string
+        .split_whitespace()
+        .nth(1)
+        .unwrap_or("0");
+    let req_per_sec = requests_per_sec_string
+        .split_whitespace()
+        .nth(1)
+        .unwrap_or("0");
+    Stats {
+        requests_per_second: req_per_sec.parse::<f64>().unwrap(),
+        name: framework_name.to_string(),
+        average_latency: avg_latency.to_string(),
+        max_latency: max_latency.to_string(),
+        total_requests: total_requests.parse().unwrap(),
+        concurrency,
+    }
+}
+
+fn read_perf_data(binary_name: &str, concurrency: u32) -> String {
+    fs::read_to_string(format!(
+        "perf/{}/{}.txt",
+        binary_name, concurrency
+    ))
+    .unwrap_or_else(|_| {
+        println!(
+            "\
+            Couldn't find the file: perf/{}/{}.txt. {} failed to finish the tests successfully, it will not be printed out in the results.
+            ",
+            binary_name, concurrency, binary_name
+        );
+        "".to_string()
+    })
+}
+
+fn print_current_info(
+    framework_index: usize,
+    bench_index: usize,
+    settings: &Settings,
+    framework_name: &str,
+) {
+    println!(
+        " {} {} {} {} {}\n",
+        format!(
+            " ⁅{}/{}⁆ ",
+            framework_index * BENCHMARK_SETTINGS.len() + bench_index + 1,
+            BENCHMARK_SETTINGS.len() * parse_frameworks().len()
+        )
+        .black()
+        .on_bright_cyan(),
+        format!(" 🚀 RUNNING: {} ", framework_name)
+            .bright_white()
+            .on_bright_red(),
+        format!(" 💪 CONCURRENCY: {} ", settings.concurrency)
+            .black()
+            .on_bright_white(),
+        format!(" 🪡 REWRK THREADS: {} ", settings.threads)
+            .bright_white()
+            .on_bright_black(),
+        format!(" ⏰ DURATION: {}s ", settings.duration)
+            .black()
+            .on_bright_yellow(),
+    );
 }
 
 fn print_expected_time(total_frameworks: usize) {

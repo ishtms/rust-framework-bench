@@ -10,22 +10,22 @@ Benchmarks of most widely used [rust](https://rust-lang.org) web frameworks.
 **[Hyper](https://hyper.rs)** - Fast and safe HTTP for the Rust language<br>
 **[Tokio-minihttp](https://github.com/tokio-rs/tokio-minihttp)** - Proof-of-concept implementation of a simple HTTP/1.1 server using Tokio.<br>
 # Results
-|   Concurrency: 128   |   Duration: 2 secs   |   Threads: 2   |
+|   Concurrency: 128   |   Duration: 5 secs   |   Threads: 2   |
 |:-------------------:|:---------------------:|:--------------:|
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Tokio-minihttp** |239,149|0.53ms|4.05ms|477,686|
-|**Hyper** |218,540|0.58ms|6.97ms|436,375|
+|**Tokio-minihttp** |242,517|0.53ms|4.31ms|1,211,949|
+|**Hyper** |209,275|0.61ms|7.70ms|1,045,638|
 
 
-|   Concurrency: 256   |   Duration: 2 secs   |   Threads: 2   |
+|   Concurrency: 256   |   Duration: 5 secs   |   Threads: 2   |
 |:-------------------:|:---------------------:|:--------------:|
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Tokio-minihttp** |231,721|1.10ms|23.90ms|462,355|
-|**Hyper** |187,067|1.36ms|22.30ms|373,328|
+|**Tokio-minihttp** |235,784|1.08ms|25.87ms|1,177,838|
+|**Hyper** |191,785|1.33ms|18.64ms|958,108|
 
 
 
