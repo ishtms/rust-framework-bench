@@ -1,11 +1,13 @@
 use colored::Colorize;
+use crossterm::{cursor, execute, terminal};
 use indicatif::{ProgressBar, ProgressStyle};
 use lazy_static::lazy_static;
 use num_format::{Locale, ToFormattedString};
 use regex::Regex;
 use serde::{Deserialize, Serialize};
+use std::io::{stdout, Write};
 use std::{
-    fmt::Write,
+    fmt::Write as FmtWrite,
     fs,
     process::{Child, Command, Output},
     time::Duration,
@@ -34,7 +36,7 @@ static OUTPUT_MD_FILE: &str = "./readme.dev.md";
 #[cfg(not(debug_assertions))]
 const DEFAULT_DURATION: u32 = 40_u32;
 #[cfg(debug_assertions)]
-const DEFAULT_DURATION: u32 = 5_u32;
+const DEFAULT_DURATION: u32 = 2_u32;
 
 static TABLE_SEPARATOR: &str = "|:-------------------:|:---------------------:|:--------------:|\n";
 
@@ -92,12 +94,7 @@ struct Framework {
 
 impl Framework {
     fn print_log(&self, settings: &Settings, framework_index: usize, bench_index: usize) {
-        print_current_info(
-            framework_index,
-            bench_index,
-            settings,
-            &self.name.to_string(),
-        );
+        print_current_info(framework_index, bench_index, settings, self.name);
         show_progress_bar(settings);
     }
 
@@ -367,18 +364,18 @@ fn calculate_stats(
     concurrency: u32,
 ) -> Stats {
     let latency_string: String = latency_regex
-        .find_iter(&benchmark_result)
+        .find_iter(benchmark_result)
         .map(|mat| format!("{} ", mat.as_str()))
         .collect();
     let mut latencies = latency_string.split_whitespace();
     let avg_latency = latencies.next().unwrap_or("99999");
     let max_latency = latencies.nth(2).unwrap_or("99999");
     let total_requests_string: String = requests_regex
-        .find_iter(&benchmark_result)
+        .find_iter(benchmark_result)
         .map(|mat| mat.as_str())
         .collect();
     let requests_per_sec_string: String = rps_regex
-        .find_iter(&benchmark_result)
+        .find_iter(benchmark_result)
         .map(|mat| mat.as_str())
         .collect();
 
@@ -422,6 +419,10 @@ fn print_current_info(
     settings: &Settings,
     framework_name: &str,
 ) {
+    let mut stdout = stdout();
+    execute!(stdout, cursor::MoveUp(2)).unwrap();
+    execute!(stdout, terminal::Clear(terminal::ClearType::CurrentLine)).unwrap();
+
     println!(
         " {} {} {} {} {}\n",
         format!(
@@ -443,7 +444,7 @@ fn print_current_info(
         format!(" ⏰ DURATION: {}s ", settings.duration)
             .black()
             .on_bright_yellow(),
-    );
+    )
 }
 
 fn print_expected_time(total_frameworks: usize) {
@@ -451,7 +452,7 @@ fn print_expected_time(total_frameworks: usize) {
         .iter()
         .fold(0, |accumulated, current| accumulated + current.duration + 4);
     println!(
-        "\t\t 💤 Benchmark will take around {} to finish.\n\n",
+        "\t\t 💤 Benchmark will take around {} to finish.\n\n\n\n",
         format!(
             " {} minutes {} seconds ",
             (total_time_per_framework * total_frameworks as u32 / 60),
@@ -463,12 +464,16 @@ fn print_expected_time(total_frameworks: usize) {
 }
 
 fn print_benchmark_message() {
-    print!("{esc}c", esc = 27 as char);
-    println!(
+    let mut stdout = stdout();
+    execute!(stdout, terminal::Clear(terminal::ClearType::FromCursorUp)).unwrap();
+    execute!(stdout, cursor::MoveTo(1, 1)).unwrap();
+    writeln!(
+        stdout,
         "\n\n\t █▀▀ ▀▀█▀▀ █▀▀█ █▀▀█ ▀▀█▀▀   █▀▀▄ █▀▀ █▀▀▄ █▀▀ █░░█ █▀▄▀█ █▀▀█ █▀▀█ █░█
 \t ▀▀█ ░░█░░ █▄▄█ █▄▄▀ ░░█░░   █▀▀▄ █▀▀ █░░█ █░░ █▀▀█ █░▀░█ █▄▄█ █▄▄▀ █▀▄
 \t ▀▀▀ ░░▀░░ ▀░░▀ ▀░▀▀ ░░▀░░   ▀▀▀░ ▀▀▀ ▀░░▀ ▀▀▀ ▀░░▀ ▀░░░▀ ▀░░▀ ▀░▀▀ ▀░▀\n\n"
-    );
+    )
+    .unwrap();
 }
 
 static MARKDOWN_HEADER: &str =

@@ -73,6 +73,7 @@ futures = "0.1.9"
 tokio-minihttp = { git = "https://github.com/tokio-rs/tokio-minihttp" }
 tokio-proto = "0.1"
 tokio-service = "0.1"
+crossterm = "0.24.0"
 
 [profile.release]
 opt-level = 3
