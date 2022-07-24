@@ -23,24 +23,29 @@ macro_rules! infer_len_slice {
 
 infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
     Settings {
-        concurrency: 10,
+        concurrency: 8,
         threads: 1,
-        duration: 20,
+        duration: 30,
     },
     Settings {
-        concurrency: 50,
+        concurrency: 64,
         threads: 1,
-        duration: 20,
+        duration: 30,
     },
     Settings {
-        concurrency: 250,
+        concurrency: 128,
         threads: 1,
-        duration: 25,
+        duration: 30,
     },
     Settings {
-        concurrency: 700,
+        concurrency: 256,
         threads: 1,
-        duration: 25,
+        duration: 30,
+    },
+    Settings {
+        concurrency: 512,
+        threads: 1,
+        duration: 30,
     },
 ]);
 
@@ -141,7 +146,7 @@ impl Framework {
             .for_each(|(bench_index, setting)| {
                 self.print_log(setting, framework_index, bench_index);
                 // wait 2 secs till the server starts running (some servers take more time to start - for example tide)
-                std::thread::sleep(Duration::from_secs(2));
+                std::thread::sleep(Duration::from_secs(3));
 
                 let wrk_handle = Command::new("wrk")
                     .arg(format!("-d{}s", setting.duration))
