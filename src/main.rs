@@ -38,8 +38,9 @@ const DEFAULT_DURATION: u32 = 40_u32;
 #[cfg(debug_assertions)]
 const DEFAULT_DURATION: u32 = 2_u32;
 
-static TABLE_SEPARATOR: &str = "|:-------------------:|:---------------------:|:--------------:|\n";
-
+static HEADER_TXT: &str = include_str!("./utils/header.txt");
+static MARKDOWN_HEADER: &str = include_str!("./utils/markdown-header.txt");
+static TABLE_SEPARATOR: &str = include_str!("./utils/table-separator.txt");
 static READ_ME_STRING: &str = include_str!("./utils/readme_block.md");
 
 infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
@@ -466,15 +467,6 @@ fn print_expected_time(total_frameworks: usize) {
 fn print_benchmark_message() {
     let mut stdout = stdout();
     execute!(stdout, terminal::Clear(terminal::ClearType::FromCursorUp)).unwrap();
-    execute!(stdout, cursor::MoveTo(1, 1)).unwrap();
-    writeln!(
-        stdout,
-        "\n\n\t █▀▀ ▀▀█▀▀ █▀▀█ █▀▀█ ▀▀█▀▀   █▀▀▄ █▀▀ █▀▀▄ █▀▀ █░░█ █▀▄▀█ █▀▀█ █▀▀█ █░█
-\t ▀▀█ ░░█░░ █▄▄█ █▄▄▀ ░░█░░   █▀▀▄ █▀▀ █░░█ █░░ █▀▀█ █░▀░█ █▄▄█ █▄▄▀ █▀▄
-\t ▀▀▀ ░░▀░░ ▀░░▀ ▀░▀▀ ░░▀░░   ▀▀▀░ ▀▀▀ ▀░░▀ ▀▀▀ ▀░░▀ ▀░░░▀ ▀░░▀ ▀░▀▀ ▀░▀\n\n"
-    )
-    .unwrap();
+    execute!(stdout, cursor::MoveTo(0, 0)).unwrap();
+    writeln!(stdout, "{}", HEADER_TXT).unwrap();
 }
-
-static MARKDOWN_HEADER: &str =
-    "|   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |\n|:------------:|:-----------:|:-----------:|:-----------:|:-----------:|";
