@@ -9,18 +9,14 @@ Benchmarking utility to test the performance of all the rust web frameworks. Bui
 ## Frameworks included
 **[Hyper](https://hyper.rs)** - Fast and safe HTTP for the Rust language<br>
 **[Tokio-minihttp](https://github.com/tokio-rs/tokio-minihttp)** - Proof-of-concept implementation of a simple HTTP/1.1 server using Tokio.<br>
-**[Hyper](https://hyper.rs)** - Fast and safe HTTP for the Rust language<br>
-**[Tokio-minihttp](https://github.com/tokio-rs/tokio-minihttp)** - Proof-of-concept implementation of a simple HTTP/1.1 server using Tokio.<br>
 # Results
 |   Concurrency: 128   |   Duration: 2 secs   |   Threads: 2   |
 |:-------------------:|:---------------------:|:--------------:|
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Tokio-minihttp** |221,200|0.58ms|9.31ms|440,786|
-|**Tokio-minihttp** |221,200|0.58ms|9.31ms|440,786|
-|**Hyper** |203,779|0.63ms|8.40ms|406,449|
-|**Hyper** |203,779|0.63ms|8.40ms|406,449|
+|**Tokio-minihttp** |223,975|0.57ms|6.44ms|447,253|
+|**Hyper** |201,279|0.63ms|7.29ms|402,063|
 
 
 |   Concurrency: 256   |   Duration: 2 secs   |   Threads: 2   |
@@ -28,10 +24,8 @@ Benchmarking utility to test the performance of all the rust web frameworks. Bui
 
 |   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Tokio-minihttp** |191,506|1.33ms|11.18ms|381,062|
-|**Tokio-minihttp** |191,506|1.33ms|11.18ms|381,062|
-|**Hyper** (FAIL)|0|FAIL|FAIL|0|
-|**Hyper** (FAIL)|0|FAIL|FAIL|0|
+|**Hyper** |197,854|1.29ms|18.82ms|394,629|
+|**Tokio-minihttp** |185,099|1.38ms|18.93ms|369,360|
 
 
 
