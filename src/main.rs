@@ -215,7 +215,7 @@ fn commit_and_push() {
     let add_output = Command::new("git").arg("add").arg(".").output().unwrap();
     let commit_output = Command::new("git")
         .arg("commit")
-        .arg("-am 'add new results [MD]'")
+        .arg("-am update benchmark results")
         .output()
         .unwrap();
     let push_output = Command::new("git").arg("push").output().unwrap();
