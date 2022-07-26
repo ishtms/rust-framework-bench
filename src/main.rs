@@ -1,3 +1,4 @@
+use chrono::Utc;
 use colored::Colorize;
 use crossterm::{cursor, execute, terminal};
 use indicatif::{ProgressBar, ProgressStyle};
@@ -179,6 +180,13 @@ async fn main() {
 fn write_readme(frameworks: &Vec<Framework>) {
     let split_string: Vec<&str> = READ_ME_STRING.split("==SPLIT==").collect();
     let mut markdown_content = String::new();
+
+    writeln!(
+        markdown_content,
+        "\n### **(Last updated: {})** \n",
+        Utc::now().format("%a %b %e %Y %T")
+    )
+    .unwrap();
 
     writeln!(&mut markdown_content, "## Frameworks included").unwrap();
     for framework in frameworks {
