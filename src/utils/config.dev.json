@@ -1,9 +1,16 @@
 [
   {
-    "name": "Nickel",
+    "name": "Actix-Web",
     "port": 3000,
-    "binary": "nickel",
-    "url": "https://github.com/nickel-org/nickel.rs",
-    "description": "An expressjs inspired framework for rust"
+    "binary": "actix",
+    "url": "https://actix.rs",
+    "description": "A powerful, pragmatic, and extremely fast web framework for Rust"
+  },
+  {
+    "name": "Hyper",
+    "port": 3000,
+    "binary": "hyper",
+    "url": "https://hyper.rs",
+    "description": "Fast and safe HTTP for the Rust language"
   }
 ]
