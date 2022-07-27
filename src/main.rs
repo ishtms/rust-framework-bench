@@ -25,19 +25,19 @@ macro_rules! infer_len_slice {
 }
 
 #[cfg(not(debug_assertions))]
-static FRAMEWORK_SETTINGS: &str = include_str!("./utils/config.json");
+static FRAMEWORK_SETTINGS: &str = include_str!("./utils/config.dev.json");
 #[cfg(debug_assertions)]
 static FRAMEWORK_SETTINGS: &str = include_str!("./utils/config.dev.json");
 
 #[cfg(not(debug_assertions))]
-static OUTPUT_MD_FILE: &str = "./readme.md";
+static OUTPUT_MD_FILE: &str = "./readme.dev.md";
 #[cfg(debug_assertions)]
 static OUTPUT_MD_FILE: &str = "./readme.dev.md";
 
 #[cfg(not(debug_assertions))]
 const DEFAULT_DURATION: u32 = 45_u32;
 #[cfg(debug_assertions)]
-const DEFAULT_DURATION: u32 = 2_u32;
+const DEFAULT_DURATION: u32 = 45_u32;
 
 static HEADER_TXT: &str = include_str!("./utils/header.txt");
 static MARKDOWN_HEADER: &str = include_str!("./utils/markdown-header.md");
@@ -45,38 +45,38 @@ static TABLE_SEPARATOR: &str = include_str!("./utils/table-separator.md");
 static READ_ME_STRING: &str = include_str!("./utils/readme_block.md");
 
 infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
-    #[cfg(not(debug_assertions))]
-    Settings {
-        concurrency: 16,
-        threads: 2,
-        duration: DEFAULT_DURATION,
-    },
-    #[cfg(not(debug_assertions))]
-    Settings {
-        concurrency: 64,
-        threads: 2,
-        duration: DEFAULT_DURATION,
-    },
-    Settings {
-        concurrency: 128,
-        threads: 2,
-        duration: DEFAULT_DURATION,
-    },
-    Settings {
-        concurrency: 256,
-        threads: 2,
-        duration: DEFAULT_DURATION,
-    },
-    Settings {
-        concurrency: 512,
-        threads: 2,
-        duration: DEFAULT_DURATION,
-    },
-    Settings {
-        concurrency: 1024,
-        threads: 2,
-        duration: DEFAULT_DURATION,
-    },
+    // #[cfg(not(debug_assertions))]
+    // Settings {
+    //     concurrency: 16,
+    //     threads: 2,
+    //     duration: DEFAULT_DURATION,
+    // },
+    // #[cfg(not(debug_assertions))]
+    // Settings {
+    //     concurrency: 64,
+    //     threads: 2,
+    //     duration: DEFAULT_DURATION,
+    // },
+    // Settings {
+    //     concurrency: 128,
+    //     threads: 2,
+    //     duration: DEFAULT_DURATION,
+    // },
+    // Settings {
+    //     concurrency: 256,
+    //     threads: 2,
+    //     duration: DEFAULT_DURATION,
+    // },
+    // Settings {
+    //     concurrency: 512,
+    //     threads: 2,
+    //     duration: DEFAULT_DURATION,
+    // },
+    // Settings {
+    //     concurrency: 1024,
+    //     threads: 2,
+    //     duration: DEFAULT_DURATION,
+    // },
     Settings {
         concurrency: 2048,
         threads: 2,

@@ -2,21 +2,22 @@ Beginning round 1...
 Benchmarking 2048 connections @ http://localhost:3000 for 45 second(s)
   Latencies:
     Avg      Stdev    Min      Max      
-    97.38ms  152.32ms  18.52ms  1280.93ms  
+    96.23ms  147.12ms  14.54ms  1340.39ms  
   Requests:
-    Total: 903123  Req/Sec: 20075.37
+    Total: 905718  Req/Sec: 20128.13
   Transfer:
-    Total: 1.65 MB Transfer Rate: 37.45 KB/Sec
+    Total: 1.73 MB Transfer Rate: 39.36 KB/Sec
 + --------------- + --------------- +
 |   Percentile    |   Avg Latency   |
 + --------------- + --------------- +
-|      99.9%      |    1113.35ms    |
-|       99%       |    1034.26ms    |
-|       95%       |    731.50ms     |
-|       90%       |    433.01ms     |
-|       75%       |    211.81ms     |
-|       50%       |    136.67ms     |
+|      99.9%      |    1061.11ms    |
+|       99%       |    945.37ms     |
+|       95%       |    701.37ms     |
+|       90%       |    447.60ms     |
+|       75%       |    217.73ms     |
+|       50%       |    137.97ms     |
 + --------------- + --------------- +
 
-892805 Errors: error shutting down connection: Socket is not connected (os error 57)
+894756 Errors: error shutting down connection: Socket is not connected (os error 57)
+1 Errors: connection error: Connection reset by peer (os error 54)
 

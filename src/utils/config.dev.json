@@ -1,16 +1,9 @@
 [
   {
-    "name": "Hyper",
+    "name": "Nickel",
     "port": 3000,
-    "binary": "hyper",
-    "url": "https://hyper.rs",
-    "description": "Fast and safe HTTP for the Rust language"
-  },
-  {
-    "name": "Tokio-minihttp",
-    "port": 3000,
-    "binary": "tokio-minihttp",
-    "url": "https://github.com/tokio-rs/tokio-minihttp",
-    "description": "Proof-of-concept implementation of a simple HTTP/1.1 server using Tokio."
+    "binary": "nickel",
+    "url": "https://github.com/nickel-org/nickel.rs",
+    "description": "An expressjs inspired framework for rust"
   }
 ]

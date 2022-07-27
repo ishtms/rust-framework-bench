@@ -7,28 +7,17 @@ Benchmarking utility to test the performance of all the rust web frameworks. Bui
 
 
 
-### **(Last updated: Wed Jul 27 2022 00:39:30)** 
+### **(Last updated: Wed Jul 27 2022 02:59:45)** 
 
 ## Frameworks included
-**[Hyper](https://hyper.rs)** - Fast and safe HTTP for the Rust language<br>
-**[Tokio-minihttp](https://github.com/tokio-rs/tokio-minihttp)** - Proof-of-concept implementation of a simple HTTP/1.1 server using Tokio.<br>
+**[Nickel](https://github.com/nickel-org/nickel.rs)** - An expressjs inspired framework for rust<br>
 # Results
-|   Concurrency: 128   |   Duration: 2 secs   |   Threads: 2   |
+|   Concurrency: 2048   |   Duration: 45 secs   |   Threads: 2   |
 |:-------------------:|:---------------------:|:--------------:|
 
 |   **Name**   |   Req/sec   | Avg Latency | Min Latency | Max Latency | Std Dev | 95% | 99% | 99.9% |  # Requests | Transfer Rate |  # Errors |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:----:|:----:|:----:|:-----------:|:-----------:|
-|**Tokio-minihttp** |236,797|0.54ms|0.04ms|8.71ms|0.16ms|0.87ms|1.48ms|4.28ms|472,615|23.26MB/Sec|0|
-|**Hyper** |192,102|0.66ms|0.02ms|4.26ms|0.35ms|1.72ms|2.27ms|3.91ms|383,710|16.12MB/Sec|0|
-
-
-|   Concurrency: 256   |   Duration: 2 secs   |   Threads: 2   |
-|:-------------------:|:---------------------:|:--------------:|
-
-|   **Name**   |   Req/sec   | Avg Latency | Min Latency | Max Latency | Std Dev | 95% | 99% | 99.9% |  # Requests | Transfer Rate |  # Errors |
-|:------------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:----:|:----:|:----:|:-----------:|:-----------:|
-|**Tokio-minihttp** |235,840|1.08ms|0.17ms|23.98ms|0.34ms|1.64ms|2.78ms|9.50ms|470,646|23.16MB/Sec|119|
-|**Hyper** |194,857|1.30ms|0.01ms|22.61ms|0.75ms|3.50ms|5.06ms|10.66ms|388,640|16.35MB/Sec|115|
+|**Nickel** |20,128|96.23ms|14.54ms|1340.39ms|147.12ms|701.37ms|945.37ms|1061.11ms|905,718|39.36KB/Sec|894756|
 
 
 
