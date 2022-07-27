@@ -35,13 +35,13 @@ static OUTPUT_MD_FILE: &str = "./readme.md";
 static OUTPUT_MD_FILE: &str = "./readme.dev.md";
 
 #[cfg(not(debug_assertions))]
-const DEFAULT_DURATION: u32 = 40_u32;
+const DEFAULT_DURATION: u32 = 45_u32;
 #[cfg(debug_assertions)]
 const DEFAULT_DURATION: u32 = 2_u32;
 
 static HEADER_TXT: &str = include_str!("./utils/header.txt");
-static MARKDOWN_HEADER: &str = include_str!("./utils/markdown-header.txt");
-static TABLE_SEPARATOR: &str = include_str!("./utils/table-separator.txt");
+static MARKDOWN_HEADER: &str = include_str!("./utils/markdown-header.md");
+static TABLE_SEPARATOR: &str = include_str!("./utils/table-separator.md");
 static READ_ME_STRING: &str = include_str!("./utils/readme_block.md");
 
 infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
@@ -67,6 +67,21 @@ infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
         threads: 2,
         duration: DEFAULT_DURATION,
     },
+    Settings {
+        concurrency: 512,
+        threads: 2,
+        duration: DEFAULT_DURATION,
+    },
+    Settings {
+        concurrency: 1024,
+        threads: 2,
+        duration: DEFAULT_DURATION,
+    },
+    Settings {
+        concurrency: 2048,
+        threads: 2,
+        duration: DEFAULT_DURATION,
+    },
 ]);
 
 struct Settings {
@@ -83,6 +98,13 @@ struct Stats {
     max_latency: String,
     total_requests: u64,
     concurrency: u32,
+    std_dev: String,
+    min_latency: String,
+    transfer_rate: String,
+    num_errors: u64,
+    pct_99_9: String,
+    pct_99: String,
+    pct_95: String,
 }
 
 #[derive(Default, Debug, Serialize, Deserialize)]
@@ -244,7 +266,7 @@ fn write_markdown(sorted_frameworks: &[Vec<Stats>]) {
         for framework_stat in batches {
             writeln!(
                 &mut markdown_string,
-                "|**{}** {}|{}|{}|{}|{}|",
+                "|**{}** {}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|",
                 framework_stat.name,
                 if framework_stat.average_latency == "99999" {
                     "(FAIL)"
@@ -257,12 +279,43 @@ fn write_markdown(sorted_frameworks: &[Vec<Stats>]) {
                 } else {
                     framework_stat.average_latency.to_string()
                 },
+                if framework_stat.min_latency == "99999" {
+                    "FAIL".to_string()
+                } else {
+                    framework_stat.min_latency.to_string()
+                },
                 if framework_stat.max_latency == "99999" {
                     "FAIL".to_string()
                 } else {
                     framework_stat.max_latency.to_string()
                 },
-                (framework_stat.total_requests as u64).to_formatted_string(&Locale::en)
+                if framework_stat.std_dev == "99999" {
+                    "FAIL".to_string()
+                } else {
+                    framework_stat.std_dev.to_string()
+                },
+                if framework_stat.pct_95 == "99999" {
+                    "N/A".to_owned()
+                } else {
+                    framework_stat.pct_95.to_owned()
+                },
+                if framework_stat.pct_99 == "99999" {
+                    "N/A".to_owned()
+                } else {
+                    framework_stat.pct_99.to_owned()
+                },
+                if framework_stat.pct_99_9 == "99999" {
+                    "N/A".to_owned()
+                } else {
+                    framework_stat.pct_99_9.to_owned()
+                },
+                (framework_stat.total_requests as u64).to_formatted_string(&Locale::en),
+                if framework_stat.transfer_rate.is_empty() {
+                    "N/A".to_owned()
+                } else {
+                    framework_stat.transfer_rate.to_owned()
+                },
+                framework_stat.num_errors
             )
             .unwrap();
         }
@@ -288,28 +341,23 @@ fn calculate_results(frameworks: &[Framework]) -> Vec<Stats> {
 
             lazy_static! {
                 static ref LATENCY_RGX: Regex = Regex::new(r"([0-9]+.[0-9]+[a-z]+)").unwrap();
-                static ref TOTAL_REQUESTS_RGX: Regex = Regex::new(r"Total:\s[0-9]+\s").unwrap();
+                static ref TOTAL_REQUESTS_RGX: Regex = Regex::new(r"l:\s+[0-9]+\s").unwrap();
+                static ref NUM_ERRORS_RGX: Regex = Regex::new(r"[0-9]+\sE").unwrap();
                 static ref REQUESTS_PER_SECOND_RGX: Regex =
-                    Regex::new(r"Sec:\s[0-9]+.[0-9]+\s").unwrap();
-                static ref LATENCY_PERCENTILE_90: Regex =
-                    Regex::new(r"90%\s*[0-9]+.[0-9]*[a-z]").unwrap();
-                static ref LATENCY_PERCENTILE_99: Regex =
-                    Regex::new(r"99%\s*[0-9]+.[0-9]*[a-z]").unwrap();
+                    Regex::new(r"c:\s[0-9]+.[0-9]+\s").unwrap();
+                static ref TRANSFER_RATE_RGX: Regex = Regex::new(r"e: [0-9]+.[0-9]+\s.*").unwrap();
             }
-            // ^ TODO: Add 95 and 99 %ile
-            // let latency_perc_90 = LATENCY_PERCENTILE_90
-            //     .find_iter(&)my_string
-            //     .map(|mat| mat.as_str())
-            //     .collect::<String>();
 
-            let framework_stats: Stats = calculate_stats(
-                framework.name,
-                &LATENCY_RGX,
-                &TOTAL_REQUESTS_RGX,
-                &REQUESTS_PER_SECOND_RGX,
-                &benchmark_result,
-                setting.concurrency,
-            );
+            let framework_stats: Stats = calculate_stats(StatArgs {
+                framework_name: framework.name,
+                latency_regex: &LATENCY_RGX,
+                requests_regex: &TOTAL_REQUESTS_RGX,
+                rps_regex: &REQUESTS_PER_SECOND_RGX,
+                num_errors_rgx: &NUM_ERRORS_RGX,
+                transfer_rate_rgx: &TRANSFER_RATE_RGX,
+                benchmark_result: &benchmark_result,
+                concurrency: setting.concurrency,
+            });
 
             statistics.push(framework_stats)
         }
@@ -342,6 +390,7 @@ fn start_bench(setting: &Settings, port: u32) -> Output {
         .arg(format!("-t={}", setting.threads))
         .arg(format!("-c={}", setting.concurrency))
         .arg(format!("-h=http://localhost:{}", port))
+        .arg("--pct")
         .output()
         .unwrap()
 }
@@ -364,21 +413,49 @@ fn show_progress_bar(settings: &Settings) {
     });
 }
 
-fn calculate_stats(
-    framework_name: &str,
-    latency_regex: &Regex,
-    requests_regex: &Regex,
-    rps_regex: &Regex,
-    benchmark_result: &str,
+struct StatArgs<'a> {
+    framework_name: &'a str,
+    latency_regex: &'a Regex,
+    requests_regex: &'a Regex,
+    rps_regex: &'a Regex,
+    num_errors_rgx: &'a Regex,
+    transfer_rate_rgx: &'a Regex,
+    benchmark_result: &'a str,
     concurrency: u32,
-) -> Stats {
+}
+
+fn calculate_stats(args: StatArgs) -> Stats {
+    let StatArgs {
+        framework_name,
+        latency_regex,
+        requests_regex,
+        rps_regex,
+        num_errors_rgx,
+        transfer_rate_rgx,
+        benchmark_result,
+        concurrency,
+    } = args;
     let latency_string: String = latency_regex
         .find_iter(benchmark_result)
         .map(|mat| format!("{} ", mat.as_str()))
         .collect();
     let mut latencies = latency_string.split_whitespace();
     let avg_latency = latencies.next().unwrap_or("99999");
-    let max_latency = latencies.nth(2).unwrap_or("99999");
+    let std_dev = latencies.next().unwrap_or("99999");
+    let min_latency = latencies.next().unwrap_or("99999");
+    let max_latency = latencies.next().unwrap_or("99999");
+    let pct_99_9 = latencies.next().unwrap_or("99999");
+    let pct_99 = latencies.next().unwrap_or("99999");
+    let pct_95 = latencies.next().unwrap_or("99999");
+
+    let transfer_rate_string: String = transfer_rate_rgx
+        .find_iter(benchmark_result)
+        .map(|mat| mat.as_str())
+        .collect::<String>()
+        .split_whitespace()
+        .skip(1)
+        .collect();
+
     let total_requests_string: String = requests_regex
         .find_iter(benchmark_result)
         .map(|mat| mat.as_str())
@@ -396,6 +473,12 @@ fn calculate_stats(
         .split_whitespace()
         .nth(1)
         .unwrap_or("0");
+    let num_errors: String = num_errors_rgx
+        .find_iter(benchmark_result)
+        .map(|mat| mat.as_str())
+        .collect();
+    let num_errors = num_errors.split_whitespace().next().unwrap_or("0");
+
     Stats {
         requests_per_second: req_per_sec.parse::<f64>().unwrap(),
         name: framework_name.to_string(),
@@ -403,6 +486,13 @@ fn calculate_stats(
         max_latency: max_latency.to_string(),
         total_requests: total_requests.parse().unwrap(),
         concurrency,
+        transfer_rate: transfer_rate_string,
+        min_latency: min_latency.to_owned(),
+        num_errors: num_errors.parse::<u64>().unwrap(),
+        pct_95: pct_95.to_owned(),
+        pct_99: pct_99.to_owned(),
+        pct_99_9: pct_99_9.to_owned(),
+        std_dev: std_dev.to_owned(),
     }
 }
 

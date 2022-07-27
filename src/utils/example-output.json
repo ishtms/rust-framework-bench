@@ -1,0 +1,10 @@
+{
+  "latency_avg": 1.535492,
+  "latency_max": 19.844832999999998,
+  "latency_min": 0.016875,
+  "latency_std_deviation": 0.29598535587874186,
+  "requests_avg": 130141.80131596672,
+  "requests_total": 1300820,
+  "transfer_rate": 16918278.09935933,
+  "transfer_total": 169105040.0
+}

@@ -7,7 +7,7 @@ Benchmarking utility to test the performance of all the rust web frameworks. Bui
 
 
 
-### **(Last updated: Tue Jul 26 2022 19:22:24)** 
+### **(Last updated: Wed Jul 27 2022 00:39:30)** 
 
 ## Frameworks included
 **[Hyper](https://hyper.rs)** - Fast and safe HTTP for the Rust language<br>
@@ -16,19 +16,19 @@ Benchmarking utility to test the performance of all the rust web frameworks. Bui
 |   Concurrency: 128   |   Duration: 2 secs   |   Threads: 2   |
 |:-------------------:|:---------------------:|:--------------:|
 
-|   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
-|:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Tokio-minihttp** |223,587|0.57ms|5.10ms|446,924|
-|**Hyper** |187,926|0.68ms|8.52ms|374,653|
+|   **Name**   |   Req/sec   | Avg Latency | Min Latency | Max Latency | Std Dev | 95% | 99% | 99.9% |  # Requests | Transfer Rate |  # Errors |
+|:------------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:----:|:----:|:----:|:-----------:|:-----------:|
+|**Tokio-minihttp** |236,797|0.54ms|0.04ms|8.71ms|0.16ms|0.87ms|1.48ms|4.28ms|472,615|23.26MB/Sec|0|
+|**Hyper** |192,102|0.66ms|0.02ms|4.26ms|0.35ms|1.72ms|2.27ms|3.91ms|383,710|16.12MB/Sec|0|
 
 
 |   Concurrency: 256   |   Duration: 2 secs   |   Threads: 2   |
 |:-------------------:|:---------------------:|:--------------:|
 
-|   **Name**   |   Req/sec   | Avg Latency | Max Latency |  # Requests |
-|:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|**Tokio-minihttp** |213,591|1.19ms|18.82ms|423,454|
-|**Hyper** |195,917|1.30ms|22.61ms|390,660|
+|   **Name**   |   Req/sec   | Avg Latency | Min Latency | Max Latency | Std Dev | 95% | 99% | 99.9% |  # Requests | Transfer Rate |  # Errors |
+|:------------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:----:|:----:|:----:|:-----------:|:-----------:|
+|**Tokio-minihttp** |235,840|1.08ms|0.17ms|23.98ms|0.34ms|1.64ms|2.78ms|9.50ms|470,646|23.16MB/Sec|119|
+|**Hyper** |194,857|1.30ms|0.01ms|22.61ms|0.75ms|3.50ms|5.06ms|10.66ms|388,640|16.35MB/Sec|115|
 
 
 
