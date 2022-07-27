@@ -2,19 +2,19 @@ Beginning round 1...
 Benchmarking 128 connections @ http://localhost:3000 for 45 second(s)
   Latencies:
     Avg      Stdev    Min      Max      
-    0.56ms   0.19ms   0.01ms   21.99ms  
+    0.57ms   0.19ms   0.01ms   20.93ms  
   Requests:
-    Total: 10199376 Req/Sec: 226658.19
+    Total: 10163658 Req/Sec: 225866.60
   Transfer:
-    Total: 1.23 GB Transfer Rate: 28.10 MB/Sec
+    Total: 1.23 GB Transfer Rate: 28.00 MB/Sec
 + --------------- + --------------- +
 |   Percentile    |   Avg Latency   |
 + --------------- + --------------- +
-|      99.9%      |     2.18ms      |
-|       99%       |     1.41ms      |
-|       95%       |     0.95ms      |
-|       90%       |     0.86ms      |
-|       75%       |     0.77ms      |
+|      99.9%      |     2.20ms      |
+|       99%       |     1.45ms      |
+|       95%       |     0.97ms      |
+|       90%       |     0.87ms      |
+|       75%       |     0.78ms      |
 |       50%       |     0.70ms      |
 + --------------- + --------------- +
 
