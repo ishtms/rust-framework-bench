@@ -34,9 +34,9 @@ static OUTPUT_MD_FILE: &str = "./readme.md";
 #[cfg(debug_assertions)]
 static OUTPUT_MD_FILE: &str = "./readme.dev.md";
 
-#[cfg(not(debug_assertions))]
-const DEFAULT_DURATION: u32 = 2_u32;
 #[cfg(debug_assertions)]
+const DEFAULT_DURATION: u32 = 2_u32;
+#[cfg(not(debug_assertions))]
 const DEFAULT_DURATION: u32 = 45_u32;
 
 static HEADER_TXT: &str = include_str!("./utils/header.txt");
@@ -52,6 +52,11 @@ infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
         duration: DEFAULT_DURATION,
     },
     #[cfg(not(debug_assertions))]
+    Settings {
+        concurrency: 32,
+        threads: 2,
+        duration: DEFAULT_DURATION,
+    },
     Settings {
         concurrency: 64,
         threads: 2,
@@ -77,11 +82,7 @@ infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
         threads: 2,
         duration: DEFAULT_DURATION,
     },
-    Settings {
-        concurrency: 2048,
-        threads: 2,
-        duration: DEFAULT_DURATION,
-    },
+
 ]);
 
 struct Settings {
