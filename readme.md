@@ -1,6 +1,6 @@
 # Rust framework benchmarks
 
-Benchmarking utility to test the performance of any web frameworks. Built with [rust](https://rust-lang.org) 🚀. (currently only rust/golang based frameworks supported)
+Benchmarking utility to test the performance of any backend/server side frameworks. Built with [rust](https://rust-lang.org) 🚀. (currently only rust/golang based frameworks supported)
 
 # Demo
 ![Demo](https://s4.gifyu.com/images/outputf55c6e3d5b6a1f8e.gif)
