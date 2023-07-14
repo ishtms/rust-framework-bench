@@ -2,21 +2,21 @@ Beginning round 1...
 Benchmarking 64 connections @ http://localhost:3000 for 20 second(s)
   Latencies:
     Avg      Stdev    Min      Max      
-    2441.23ms  3227.02ms  0.66ms   6711.09ms  
+    3099.55ms  3345.02ms  0.73ms   6714.79ms  
   Requests:
-    Total:   22    Req/Sec:  1.10  
+    Total:   26    Req/Sec:  1.30  
   Transfer:
     Total: 0.00 B  Transfer Rate: 0.00 B/Sec
 + --------------- + --------------- +
 |   Percentile    |   Avg Latency   |
 + --------------- + --------------- +
-|      99.9%      |    6711.09ms    |
-|       99%       |    6711.09ms    |
-|       95%       |    6711.09ms    |
-|       90%       |    6711.03ms    |
-|       75%       |    6710.82ms    |
-|       50%       |    4881.11ms    |
+|      99.9%      |    6714.79ms    |
+|       99%       |    6714.79ms    |
+|       95%       |    6714.79ms    |
+|       90%       |    6714.78ms    |
+|       75%       |    6714.61ms    |
+|       50%       |    6196.54ms    |
 + --------------- + --------------- +
 
-52 Errors: connection closed
+61 Errors: connection closed
 

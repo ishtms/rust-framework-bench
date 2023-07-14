@@ -1,2 +1,22 @@
 Beginning round 1...
 Benchmarking 1024 connections @ http://localhost:3000 for 20 second(s)
+  Latencies:
+    Avg      Stdev    Min      Max      
+    0.76ms   8.89ms   0.02ms   635.32ms  
+  Requests:
+    Total: 2747419 Req/Sec: 137511.89
+  Transfer:
+    Total: 385.07 MB Transfer Rate: 19.27 MB/Sec
++ --------------- + --------------- +
+|   Percentile    |   Avg Latency   |
++ --------------- + --------------- +
+|      99.9%      |    218.01ms     |
+|       99%       |     53.17ms     |
+|       95%       |     13.68ms     |
+|       90%       |     6.91ms      |
+|       75%       |     2.83ms      |
+|       50%       |     1.46ms      |
++ --------------- + --------------- +
+
+74310 Errors: error shutting down connection: Socket is not connected (os error 57)
+

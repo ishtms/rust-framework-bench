@@ -72,16 +72,16 @@ infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
         threads: 2,
         duration: DEFAULT_DURATION,
     },
-    // Settings {
-    //     concurrency: 512,
-    //     threads: 2,
-    //     duration: DEFAULT_DURATION,
-    // },
-    // Settings {
-    //     concurrency: 1024,
-    //     threads: 2,
-    //     duration: DEFAULT_DURATION,
-    // },
+    Settings {
+        concurrency: 512,
+        threads: 2,
+        duration: DEFAULT_DURATION,
+    },
+    Settings {
+        concurrency: 1024,
+        threads: 2,
+        duration: DEFAULT_DURATION,
+    },
 
 ]);
 
