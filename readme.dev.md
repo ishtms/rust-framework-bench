@@ -12,7 +12,8 @@ Benchmarking utility to test the performance of all the rust web frameworks. Bui
 ## Frameworks included
 **[Nickel](https://github.com/nickel-org/nickel.rs)** - An expressjs inspired framework for rust<br>
 # Results
- <div style="border: 2px solid orange; padding: 4px 8px; text-align: center; width: 100%; display: flex; flex; justify-content: space-around; border-radius: 5px"><span>Concurrency: 2048   </span>   </span>Duration: 45 secs   </span> <span>Threads: 2</span>   </div>
+|   Concurrency: 2048   |   Duration: 45 secs   |   Threads: 2   |
+|:-------------------:|:---------------------:|:--------------:|
 
 |   **Name**   |   Req/sec   | Avg Latency | Min Latency | Max Latency | Std Dev | 95% | 99% | 99.9% |  # Requests | Transfer Rate |  # Errors |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:----:|:----:|:----:|:-----------:|:-----------:|

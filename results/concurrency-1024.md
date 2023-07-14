@@ -1,19 +1,19 @@
 |   **Name**   |   Req/sec   | Avg Latency | Min Latency | Max Latency | Std Dev | 95% | 99% | 99.9% |  # Requests | Transfer Rate |  # Errors |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:----:|:----:|:----:|:-----------:|:-----------:|
-|**May-MiniHttp** |226,169|4.52ms|0.03ms|142.72ms|7.71ms|28.18ms|47.06ms|68.14ms|10,176,352|21.99MB/Sec|3498|
-|**Tokio-minihttp** |217,174|4.71ms|1.62ms|125.73ms|0.95ms|7.14ms|9.84ms|21.77ms|9,771,058|21.33MB/Sec|3472|
-|**Actix-Web** |203,924|5.02ms|0.03ms|128.59ms|8.98ms|33.77ms|52.90ms|74.43ms|9,175,367|25.27MB/Sec|3513|
-|**Hyper** |200,049|5.11ms|0.03ms|127.52ms|10.10ms|37.97ms|47.98ms|62.35ms|9,001,201|16.78MB/Sec|3569|
-|**Ntex** |199,485|5.13ms|0.03ms|124.40ms|9.72ms|36.99ms|58.44ms|80.03ms|8,975,806|24.53MB/Sec|3492|
-|**Thruster** |195,080|5.25ms|0.03ms|125.90ms|10.30ms|38.63ms|48.14ms|61.97ms|8,777,493|18.97MB/Sec|3450|
-|**Roa** |192,925|5.30ms|0.03ms|127.61ms|10.55ms|39.81ms|49.20ms|63.14ms|8,680,645|16.18MB/Sec|3584|
-|**Warp** |192,306|5.32ms|0.03ms|118.88ms|10.46ms|39.22ms|49.16ms|62.84ms|8,652,570|23.65MB/Sec|3483|
-|**Nickel** |186,305|0.07ms|0.01ms|47.41ms|0.40ms|0.26ms|0.89ms|7.75ms|8,381,899|26.82MB/Sec|4471|
-|**Axum** |175,977|5.81ms|0.03ms|147.37ms|11.51ms|43.68ms|55.28ms|69.51ms|7,918,042|21.64MB/Sec|3500|
-|**Salvo** |175,319|5.84ms|0.03ms|142.53ms|11.61ms|44.04ms|55.37ms|70.13ms|7,888,255|21.73MB/Sec|3527|
-|**Viz** |172,988|5.92ms|0.03ms|122.06ms|11.87ms|45.51ms|58.48ms|76.98ms|7,783,641|21.44MB/Sec|3447|
-|**Poem** |169,456|6.04ms|0.03ms|126.04ms|12.56ms|48.57ms|61.86ms|77.57ms|7,624,721|21.00MB/Sec|3479|
-|**Astra** |164,477|0.91ms|0.02ms|117.93ms|0.71ms|2.21ms|3.96ms|15.90ms|7,399,718|16.78MB/Sec|3519|
-|**Gotham** |160,986|6.36ms|0.03ms|141.66ms|13.20ms|50.83ms|64.31ms|82.12ms|7,243,408|25.63MB/Sec|3559|
-|**Rocket** |119,394|8.57ms|0.04ms|126.31ms|17.43ms|66.22ms|81.75ms|99.22ms|5,372,281|28.11MB/Sec|3557|
-|**Tide** |84,316|12.14ms|0.06ms|184.70ms|16.26ms|55.81ms|75.70ms|97.77ms|3,793,813|10.36MB/Sec|3477|
+|**Actix-Web** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Hyper** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Axum** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Warp** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Ntex** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Rocket** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Tide** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**May-MiniHttp** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Viz** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Tokio-minihttp** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Thruster** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Salvo** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Poem** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Gotham** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Astra** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Nickel** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Roa** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|

@@ -37,7 +37,7 @@ static OUTPUT_MD_FILE: &str = "./readme.dev.md";
 #[cfg(debug_assertions)]
 const DEFAULT_DURATION: u32 = 2_u32;
 #[cfg(not(debug_assertions))]
-const DEFAULT_DURATION: u32 = 45_u32;
+const DEFAULT_DURATION: u32 = 20_u32;
 
 static HEADER_TXT: &str = include_str!("./utils/header.txt");
 static MARKDOWN_HEADER: &str = include_str!("./utils/markdown-header.md");
@@ -72,16 +72,16 @@ infer_len_slice !(static BENCHMARK_SETTINGS: [Settings; _] = [
         threads: 2,
         duration: DEFAULT_DURATION,
     },
-    Settings {
-        concurrency: 512,
-        threads: 2,
-        duration: DEFAULT_DURATION,
-    },
-    Settings {
-        concurrency: 1024,
-        threads: 2,
-        duration: DEFAULT_DURATION,
-    },
+    // Settings {
+    //     concurrency: 512,
+    //     threads: 2,
+    //     duration: DEFAULT_DURATION,
+    // },
+    // Settings {
+    //     concurrency: 1024,
+    //     threads: 2,
+    //     duration: DEFAULT_DURATION,
+    // },
 
 ]);
 

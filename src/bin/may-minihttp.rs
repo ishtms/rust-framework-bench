@@ -1,5 +1,5 @@
 extern crate may_minihttp;
-use may_minihttp::{HttpService, HttpServiceFactory, Request, Response};
+use may_minihttp::{HttpServer, HttpService, Request, Response};
 use std::io;
 
 /// `HelloWorld` is the *service* that we're going to be implementing to service
@@ -9,26 +9,16 @@ use std::io;
 struct HelloWorld;
 
 impl HttpService for HelloWorld {
-    fn call(&mut self, _req: Request, rsp: &mut Response) -> io::Result<()> {
-        rsp.body("Hello, world!");
+    fn call(&mut self, _req: Request, res: &mut Response) -> io::Result<()> {
+        res.body("Hello, world!");
         Ok(())
-    }
-}
-
-struct HelloWorldFac;
-
-impl HttpServiceFactory for HelloWorldFac {
-    type Service = HelloWorld;
-
-    fn new_service(&self) -> Self::Service {
-        HelloWorld
     }
 }
 
 fn main() {
     let port_number: u16 = str::parse(get_port_number().as_str()).unwrap();
 
-    let server = HelloWorldFac
+    let server = HttpServer(HelloWorld)
         .start(format!("127.0.0.1:{}", port_number))
         .unwrap();
     server.wait();

@@ -6,15 +6,6 @@ use tokio_minihttp::{Http, Request, Response};
 use tokio_proto::TcpServer;
 use tokio_service::Service;
 
-/// `HelloWorld` is the *service* that we're going to be implementing to service
-/// the HTTP requests we receive.
-///
-/// The tokio-minihttp crate, and much of Tokio itself, are centered around the
-/// concept of a service for interoperability between crates. Our service here
-/// carries no data with it.
-///
-/// Note that a new instance of `HelloWorld` is created for each TCP connection
-/// we service, created below in the closure passed to `serve`.
 struct HelloWorld;
 
 impl Service for HelloWorld {

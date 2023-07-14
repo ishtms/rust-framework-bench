@@ -1,19 +1,19 @@
 |   **Name**   |   Req/sec   | Avg Latency | Min Latency | Max Latency | Std Dev | 95% | 99% | 99.9% |  # Requests | Transfer Rate |  # Errors |
 |:------------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:----:|:----:|:----:|:-----------:|:-----------:|
-|**Tokio-minihttp** |239,935|1.07ms|0.03ms|23.70ms|0.17ms|1.63ms|2.26ms|2.87ms|10,796,254|23.57MB/Sec|112|
-|**May-MiniHttp** |225,891|1.13ms|0.01ms|20.20ms|0.46ms|2.48ms|2.98ms|3.66ms|10,164,348|21.97MB/Sec|116|
-|**Hyper** |214,153|1.19ms|0.01ms|23.93ms|0.52ms|2.66ms|3.24ms|4.57ms|9,636,297|17.97MB/Sec|113|
-|**Roa** |213,560|1.20ms|0.01ms|27.46ms|0.54ms|2.74ms|3.41ms|5.33ms|9,609,530|17.92MB/Sec|112|
-|**Ntex** |212,350|1.21ms|0.02ms|126.74ms|0.76ms|2.61ms|3.53ms|8.38ms|9,555,230|26.12MB/Sec|115|
-|**Actix-Web** |211,556|1.21ms|0.01ms|28.15ms|0.49ms|2.55ms|3.00ms|3.79ms|9,519,375|26.23MB/Sec|114|
-|**Warp** |207,447|1.23ms|0.01ms|20.08ms|0.56ms|2.80ms|3.39ms|4.74ms|9,334,486|25.52MB/Sec|117|
-|**Thruster** |206,336|1.24ms|0.01ms|24.78ms|0.57ms|2.89ms|3.68ms|5.34ms|9,284,528|20.07MB/Sec|112|
-|**Viz** |195,104|1.31ms|0.01ms|25.17ms|0.63ms|3.07ms|4.00ms|5.94ms|8,779,221|24.19MB/Sec|114|
-|**Salvo** |191,004|1.34ms|0.01ms|25.07ms|0.66ms|3.14ms|4.15ms|5.92ms|8,594,560|23.68MB/Sec|112|
-|**Nickel** |187,718|0.06ms|0.01ms|22.42ms|0.06ms|0.11ms|0.16ms|0.46ms|8,446,617|27.03MB/Sec|229|
-|**Poem** |186,233|1.37ms|0.02ms|20.81ms|0.65ms|3.15ms|4.15ms|5.99ms|8,380,052|23.09MB/Sec|114|
-|**Axum** |184,895|1.38ms|0.01ms|17.54ms|0.69ms|3.25ms|4.38ms|6.05ms|8,319,745|22.75MB/Sec|118|
-|**Gotham** |177,918|1.44ms|0.02ms|23.32ms|0.70ms|3.29ms|4.48ms|6.31ms|8,005,776|28.34MB/Sec|113|
-|**Astra** |172,412|0.83ms|0.02ms|24.57ms|0.31ms|1.72ms|2.48ms|3.76ms|7,757,995|17.59MB/Sec|114|
-|**Rocket** |120,433|2.12ms|0.02ms|24.72ms|0.74ms|3.70ms|4.84ms|6.59ms|5,419,109|28.37MB/Sec|116|
-|**Tide** |85,056|3.01ms|0.03ms|41.62ms|0.83ms|4.73ms|6.58ms|16.39ms|3,827,291|10.46MB/Sec|113|
+|**Actix-Web** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Hyper** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Axum** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Warp** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Ntex** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Rocket** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Tide** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**May-MiniHttp** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Viz** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Tokio-minihttp** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Thruster** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Salvo** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Poem** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Gotham** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Astra** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Nickel** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
+|**Roa** (FAIL)|0|FAIL|FAIL|FAIL|FAIL|N/A|N/A|N/A|0|N/A|0|
