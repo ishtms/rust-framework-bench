@@ -78,7 +78,7 @@ fn get_port_number() -> String {
 
 ## Frameworks included
 
-**[Actix-Web](https://actix.rs)** - A powerful, pragmatic, and extremely fast web framework for Rust<br>
+**[Actix Web](https://actix.rs)** - A powerful, pragmatic, and extremely fast web framework for Rust<br>
 **[Hyper](https://hyper.rs)** - Fast and safe HTTP for the Rust language<br>
 **[Axum](https://github.com/tokio-rs/axum)** - Web application framework that focuses on ergonomics and modularity<br>
 **[Warp](https://github.com/seanmonstar/warp)** - A super-easy, composable, web server framework for warp speeds<br>
@@ -111,7 +111,7 @@ fn get_port_number() -> String {
 |         **Axum**          | 182,147 |   0.09ms    |   0.01ms    |   5.09ms    |  0.04ms  | 0.18ms  |  0.27ms  |  0.73ms   | 3,642,048  |  22.41MB/Sec  |    0     |
 |         **Poem**          | 180,297 |   0.09ms    |   0.02ms    |   4.73ms    |  0.03ms  | 0.17ms  |  0.22ms  |  0.36ms   | 3,605,724  |  22.35MB/Sec  |    0     |
 |        **Gotham**         | 179,680 |   0.09ms    |   0.02ms    |   14.68ms   |  0.05ms  | 0.18ms  |  0.28ms  |  0.75ms   | 3,591,288  |  28.62MB/Sec  |    0     |
-|       **Actix-Web**       | 166,331 |   0.10ms    |   0.01ms    |   6.06ms    |  0.05ms  | 0.22ms  |  0.36ms  |  1.03ms   | 3,326,160  |  20.62MB/Sec  |    0     |
+|       **Actix Web**       | 166,331 |   0.10ms    |   0.01ms    |   6.06ms    |  0.05ms  | 0.22ms  |  0.36ms  |  1.03ms   | 3,326,160  |  20.62MB/Sec  |    0     |
 |         **Astra**         | 161,134 |   0.08ms    |   0.02ms    |   3.84ms    |  0.04ms  | 0.17ms  |  0.26ms  |  0.74ms   | 3,221,679  |  16.29MB/Sec  |    0     |
 |         **Ntex**          | 159,619 |   0.10ms    |   0.02ms    |   41.72ms   |  0.08ms  | 0.21ms  |  0.33ms  |  1.06ms   | 3,191,402  |  19.64MB/Sec  |    0     |
 |        **Rocket**         | 147,545 |   0.11ms    |   0.02ms    |   7.60ms    |  0.06ms  | 0.23ms  |  0.37ms  |  1.23ms   | 2,950,284  |  34.76MB/Sec  |    0     |
@@ -135,7 +135,7 @@ fn get_port_number() -> String {
 |         **Poem**          | 184,060 |   0.17ms    |   0.02ms    |   5.24ms    |  0.07ms  |  0.34ms  |  0.43ms  |  0.66ms   | 3,680,634  |  22.82MB/Sec  |    0     |
 |        **Gotham**         | 182,769 |   0.17ms    |   0.02ms    |   10.68ms   |  0.08ms  |  0.36ms  |  0.53ms  |  1.29ms   | 3,654,263  |  29.11MB/Sec  |    0     |
 |     **May-MiniHttp**      | 182,092 |   0.18ms    |   0.01ms    |   11.56ms   |  0.09ms  |  0.40ms  |  0.59ms  |  1.56ms   | 3,641,328  |  17.37MB/Sec  |    0     |
-|       **Actix-Web**       | 171,106 |   0.19ms    |   0.02ms    |   7.62ms    |  0.08ms  |  0.39ms  |  0.54ms  |  1.32ms   | 3,421,376  |  21.21MB/Sec  |    0     |
+|       **Actix Web**       | 171,106 |   0.19ms    |   0.02ms    |   7.62ms    |  0.08ms  |  0.39ms  |  0.54ms  |  1.32ms   | 3,421,376  |  21.21MB/Sec  |    0     |
 |         **Ntex**          | 167,185 |   0.19ms    |   0.02ms    |   57.92ms   |  0.13ms  |  0.40ms  |  0.58ms  |  1.74ms   | 3,342,806  |  20.57MB/Sec  |    0     |
 |         **Astra**         | 163,832 |   0.19ms    |   0.02ms    |   9.38ms    |  0.08ms  |  0.38ms  |  0.55ms  |  1.41ms   | 3,275,694  |  16.56MB/Sec  |    0     |
 |        **Nickel**         | 156,104 |   0.08ms    |   0.02ms    |   7.42ms    |  0.04ms  |  0.16ms  |  0.26ms  |  0.81ms   | 3,120,998  |  22.48MB/Sec  |    0     |
@@ -159,7 +159,7 @@ fn get_port_number() -> String {
 |     **May-MiniHttp**      | 181,688 |   0.35ms    |   0.01ms    |   7.68ms    |  0.15ms   |  0.75ms   |  0.97ms   |  1.93ms   | 3,631,909  |  17.33MB/Sec  |    0     |
 |        **Gotham**         | 179,835 |   0.36ms    |   0.02ms    |   9.18ms    |  0.15ms   |  0.74ms   |  1.01ms   |  2.13ms   | 3,595,901  |  28.64MB/Sec  |    0     |
 |         **Astra**         | 163,679 |   0.38ms    |   0.02ms    |   13.32ms   |  0.16ms   |  0.78ms   |  1.12ms   |  3.19ms   | 3,272,396  |  16.55MB/Sec  |    0     |
-|       **Actix-Web**       | 161,267 |   0.40ms    |   0.02ms    |   74.22ms   |  0.23ms   |  0.84ms   |  1.22ms   |  3.56ms   | 3,224,367  |  19.99MB/Sec  |    0     |
+|       **Actix Web**       | 161,267 |   0.40ms    |   0.02ms    |   74.22ms   |  0.23ms   |  0.84ms   |  1.22ms   |  3.56ms   | 3,224,367  |  19.99MB/Sec  |    0     |
 |         **Ntex**          | 160,296 |   0.40ms    |   0.02ms    |  111.84ms   |  0.33ms   |  0.82ms   |  1.16ms   |  3.63ms   | 3,204,283  |  19.72MB/Sec  |    0     |
 |        **Nickel**         | 156,044 |   0.08ms    |   0.02ms    |   9.25ms    |  0.04ms   |  0.16ms   |  0.25ms   |  0.76ms   | 3,119,802  |  22.47MB/Sec  |    0     |
 |        **Rocket**         | 131,955 |   0.48ms    |   0.02ms    |   10.19ms   |  0.19ms   |  0.88ms   |  1.16ms   |  2.72ms   | 2,638,656  |  31.08MB/Sec  |    0     |
@@ -181,7 +181,7 @@ fn get_port_number() -> String {
 |        **Gotham**         | 176,835 |   0.72ms    |   0.02ms    |   16.15ms   |  0.30ms  |  1.48ms  |  1.94ms   |   4.29ms   | 3,534,689  |  28.16MB/Sec  |    0     |
 |         **Axum**          | 175,712 |   0.73ms    |   0.02ms    |   9.16ms    |  0.30ms  |  1.49ms  |  1.89ms   |   3.89ms   | 3,512,451  |  21.62MB/Sec  |    0     |
 |          **Roa**          | 173,465 |   0.74ms    |   0.02ms    |   10.77ms   |  0.33ms  |  1.55ms  |  2.05ms   |   4.61ms   | 3,467,218  |  14.56MB/Sec  |    0     |
-|       **Actix-Web**       | 164,666 |   0.78ms    |   0.02ms    |   14.92ms   |  0.31ms  |  1.50ms  |  1.85ms   |   3.88ms   | 3,291,837  |  20.41MB/Sec  |    0     |
+|       **Actix Web**       | 164,666 |   0.78ms    |   0.02ms    |   14.92ms   |  0.31ms  |  1.50ms  |  1.85ms   |   3.88ms   | 3,291,837  |  20.41MB/Sec  |    0     |
 |         **Ntex**          | 158,018 |   0.81ms    |   0.02ms    |   26.16ms   |  0.34ms  |  1.55ms  |  1.99ms   |   4.88ms   | 3,159,623  |  19.44MB/Sec  |    0     |
 |        **Nickel**         | 157,611 |   0.08ms    |   0.02ms    |   9.51ms    |  0.04ms  |  0.15ms  |  0.24ms   |   0.68ms   | 3,151,260  |  22.70MB/Sec  |    0     |
 |         **Astra**         | 153,002 |   0.81ms    |   0.02ms    |   10.35ms   |  0.32ms  |  1.69ms  |  2.46ms   |   5.27ms   | 3,058,406  |  15.47MB/Sec  |    0     |
@@ -202,7 +202,7 @@ fn get_port_number() -> String {
 |         **Hyper**         | 171,299 |   1.49ms    |   0.01ms    |   19.19ms   |  0.62ms  |  2.92ms   |  3.55ms   |   6.78ms   | 3,424,658  |  14.38MB/Sec  |    79    |
 |         **Warp**          | 171,048 |   1.50ms    |   0.02ms    |   19.74ms   |  0.62ms  |  2.94ms   |  3.57ms   |   6.95ms   | 3,418,322  |  21.04MB/Sec  |    66    |
 |         **Axum**          | 167,980 |   1.52ms    |   0.02ms    |   18.24ms   |  0.63ms  |  2.99ms   |  3.66ms   |   7.03ms   | 3,357,211  |  20.67MB/Sec  |    47    |
-|       **Actix-Web**       | 161,680 |   1.58ms    |   0.02ms    |   22.93ms   |  0.63ms  |  2.98ms   |  3.72ms   |   7.52ms   | 3,231,910  |  20.04MB/Sec  |    80    |
+|       **Actix Web**       | 161,680 |   1.58ms    |   0.02ms    |   22.93ms   |  0.63ms  |  2.98ms   |  3.72ms   |   7.52ms   | 3,231,910  |  20.04MB/Sec  |    80    |
 |         **Poem**          | 159,960 |   1.60ms    |   0.02ms    |   22.80ms   |  0.65ms  |  3.03ms   |  3.76ms   |   8.02ms   | 3,198,241  |  19.83MB/Sec  |   116    |
 |        **Gotham**         | 158,082 |   1.62ms    |   0.02ms    |   18.27ms   |  0.64ms  |  3.06ms   |  3.91ms   |   7.90ms   | 3,160,314  |  25.18MB/Sec  |    52    |
 |         **Astra**         | 154,864 |   0.92ms    |   0.02ms    |   23.10ms   |  0.35ms  |  1.87ms   |  2.61ms   |   5.21ms   | 3,095,003  |  15.66MB/Sec  |   110    |
@@ -224,7 +224,7 @@ fn get_port_number() -> String {
 |         **Salvo**         | 166,343 |   3.08ms    |   0.03ms    |  111.42ms   |  4.71ms   |  19.85ms  |  31.43ms  |  49.29ms  | 3,324,851  |  20.62MB/Sec  |   395    |
 |         **Warp**          | 164,739 |   3.10ms    |   0.03ms    |  108.67ms   |  4.62ms   |  19.54ms  |  29.39ms  |  43.28ms  | 3,291,918  |  20.26MB/Sec  |   522    |
 |         **Hyper**         | 162,757 |   3.14ms    |   0.03ms    |   63.05ms   |  4.69ms   |  19.81ms  |  29.63ms  |  42.64ms  | 3,252,534  |  13.66MB/Sec  |   414    |
-|       **Actix-Web**       | 158,601 |   3.23ms    |   0.03ms    |  122.56ms   |  4.94ms   |  21.25ms  |  34.07ms  |  47.45ms  | 3,170,232  |  19.66MB/Sec  |   520    |
+|       **Actix Web**       | 158,601 |   3.23ms    |   0.03ms    |  122.56ms   |  4.94ms   |  21.25ms  |  34.07ms  |  47.45ms  | 3,170,232  |  19.66MB/Sec  |   520    |
 |         **Axum**          | 157,622 |   3.24ms    |   0.03ms    |  120.70ms   |  4.92ms   |  21.00ms  |  32.04ms  |  45.96ms  | 3,150,744  |  19.39MB/Sec  |   696    |
 |        **Gotham**         | 154,265 |   3.32ms    |   0.04ms    |   65.51ms   |  5.37ms   |  23.12ms  |  36.42ms  |  51.79ms  | 3,083,266  |  24.57MB/Sec  |   420    |
 |         **Poem**          | 151,142 |   3.38ms    |   0.04ms    |   77.54ms   |  5.57ms   |  24.11ms  |  38.04ms  |  53.14ms  | 3,021,602  |  18.73MB/Sec  |   633    |
@@ -248,7 +248,7 @@ fn get_port_number() -> String {
 |         **Warp**          | 161,833 |   6.32ms    |   0.03ms    |  148.36ms   | 12.90ms | 49.17ms | 62.99ms | 80.68ms  | 3,234,786  |  19.89MB/Sec  |   3438   |
 |         **Hyper**         | 160,575 |   6.37ms    |   0.03ms    |  128.50ms   | 13.04ms | 50.05ms | 65.11ms | 78.24ms  | 3,209,247  |  13.46MB/Sec  |   2757   |
 |         **Axum**          | 156,053 |   6.55ms    |   0.03ms    |  125.25ms   | 13.74ms | 53.96ms | 71.86ms | 89.47ms  | 3,118,167  |  19.18MB/Sec  |   2547   |
-|       **Actix-Web**       | 153,939 |   6.64ms    |   0.04ms    |  125.40ms   | 13.70ms | 55.59ms | 76.83ms | 98.93ms  | 3,078,271  |  19.07MB/Sec  |   3173   |
+|       **Actix Web**       | 153,939 |   6.64ms    |   0.04ms    |  125.40ms   | 13.70ms | 55.59ms | 76.83ms | 98.93ms  | 3,078,271  |  19.07MB/Sec  |   3173   |
 |         **Poem**          | 153,259 |   6.67ms    |   0.03ms    |  125.03ms   | 14.46ms | 57.65ms | 76.16ms | 94.48ms  | 3,063,010  |  18.98MB/Sec  |   3166   |
 |         **Astra**         | 153,192 |   0.96ms    |   0.02ms    |  120.20ms   | 0.97ms  | 2.46ms  | 5.44ms  | 26.56ms  | 3,059,441  |  15.47MB/Sec  |   3191   |
 |         **Ntex**          | 148,314 |   6.89ms    |   0.05ms    |  128.54ms   | 15.24ms | 63.00ms | 85.73ms | 107.35ms | 2,963,304  |  18.23MB/Sec  |   2949   |
